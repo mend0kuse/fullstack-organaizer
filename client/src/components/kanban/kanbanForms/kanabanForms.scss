@@ -1,0 +1,10 @@
+.kanban-form {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	.inp-up {
+		input {
+			background: none;
+		}
+	}
+}

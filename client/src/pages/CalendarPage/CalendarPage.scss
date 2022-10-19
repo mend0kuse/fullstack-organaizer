@@ -1,0 +1,14 @@
+.calendar {
+	&__container {
+		max-width: 1200px;
+		padding-top: 20px;
+		margin: 0 auto;
+	}
+	&__title {
+		text-align: center;
+	}
+	&__navigation {
+		display: flex;
+		justify-content: space-between;
+	}
+}

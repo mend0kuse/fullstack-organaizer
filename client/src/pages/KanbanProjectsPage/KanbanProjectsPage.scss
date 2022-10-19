@@ -1,0 +1,84 @@
+@import "../../mixins";
+.kanban {
+	&__container {
+		min-width: 1000px;
+	}
+
+	&__title {
+		margin: 0 0 20px 0;
+	}
+}
+.tabs-kanban {
+	display: flex;
+	align-items: center;
+	&__names {
+		display: flex;
+		column-gap: 10px;
+	}
+	&__item {
+		font-size: $fsSupTitle;
+		display: block;
+		cursor: pointer;
+		color: white;
+		background: none;
+		padding: 10px 5px;
+		position: relative;
+		&::after {
+			content: "";
+			transition: 0.2s linear all;
+			display: block;
+			background-color: #fffd63;
+			height: 3px;
+			width: 100%;
+			transform: scaleX(0);
+			position: absolute;
+			bottom: -5px;
+			left: 0;
+		}
+	}
+}
+.add-tabs__field-enter {
+	width: 0;
+	transform-origin: left;
+}
+.add-tabs__field-enter-active {
+	width: 100%;
+	transform-origin: left;
+	transition: all 500ms linear;
+}
+.add-tabs__field-exit {
+	width: 100%;
+}
+.add-tabs__field-exit-active {
+	transform-origin: left;
+	width: 0;
+	transition: all 500ms linear;
+}
+
+.add-tabs {
+	margin-left: 30px;
+	display: flex;
+	align-items: center;
+	column-gap: 10px;
+	&__field {
+		display: flex;
+		position: relative;
+		align-items: flex-end;
+		input {
+			max-width: 150px;
+			&::placeholder {
+				color: white;
+			}
+		}
+		button {
+			background: none;
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.tab-active {
+	&::after {
+		transform: scaleX(100%);
+	}
+}

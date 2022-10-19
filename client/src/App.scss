@@ -1,0 +1,130 @@
+@import "./mixins.scss";
+
+/*Обнуление*/
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+*,
+*:before,
+*:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+:focus,
+:active {
+	outline: none;
+}
+a:focus,
+a:active {
+	outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+	display: block;
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	font-size: 100%;
+	line-height: 1;
+	font-size: 14px;
+	-ms-text-size-adjust: 100%;
+	-moz-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+input,
+button,
+textarea {
+	font-family: inherit;
+}
+
+input::-ms-clear {
+	display: none;
+}
+button {
+	cursor: pointer;
+}
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+a,
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+ul li {
+	list-style: none;
+}
+img {
+	vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: inherit;
+	font-weight: 400;
+}
+/*--------------------*/
+@font-face {
+	font-family: "Montserrat";
+	src: url("./fonts/Montserrat-Regular.woff2"), url("./fonts/Montserrat-Regular.woff");
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Montserrat";
+	src: url("./fonts/Montserrat-Medium.woff2"), url("./fonts/Montserrat-Medium.woff");
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Montserrat";
+	src: url("./fonts/Montserrat-SemiBold.woff2"), url("./fonts/Montserrat-SemiBold.woff");
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Montserrat";
+	src: url("./fonts/Montserrat-ExtraBold.woff2"), url("./fonts/Montserrat-ExtraBold.woff");
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+}
+
+/*--------------------------------------*/
+html,
+body {
+	height: 100%;
+	font-family: "Montserrat", sans-serif;
+	font-weight: 400;
+	background: linear-gradient(97.51deg, #8bfffe 3.42%, #8482d5 31.82%, #be9aee 60.42%, #df8bef 80.48%, #fe7aad 99.75%);
+	color: white;
+}
+.sect-title {
+	font-size: $fsTitle;
+	font-weight: bold;
+}
+
+#root {
+	flex-direction: column;
+	display: flex;
+	min-height: 100%;
+}

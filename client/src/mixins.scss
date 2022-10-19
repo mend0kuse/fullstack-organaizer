@@ -1,0 +1,16 @@
+$mainColorBlue: #d8e6ff;
+$hoverColorBlue: #206efe;
+$darkBlue: #0060bf;
+$mainColorWhite: white;
+
+$fsSmall: 12px;
+$fsReg: 14px;
+$fsUp: 16px;
+$fsSupTitle: 22px;
+$fsTitle: 30px;
+
+[class*="__container"] {
+	margin: 0 auto;
+	max-width: 1000px;
+	padding: 0 15px;
+}

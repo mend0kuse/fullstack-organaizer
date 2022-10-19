@@ -1,0 +1,62 @@
+@import "../../../mixins.scss";
+
+.modal__content-enter {
+	transform: scale(0);
+	opacity: 0;
+}
+.modal__content-enter-active {
+	opacity: 1;
+	transition: all 400ms ease-in-out;
+	transform: scale(100%);
+}
+.modal__content-exit {
+	transform: scale(100%);
+	opacity: 1;
+}
+.modal__content-exit-active {
+	transform: scale(0);
+	opacity: 0;
+}
+
+.modal {
+	position: fixed;
+	display: flex;
+
+	transition: 0.4s ease-in-out all;
+	visibility: hidden;
+	opacity: 0;
+
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+
+	justify-content: center;
+	align-items: center;
+}
+.modal__content {
+	background: rgba(216, 230, 255, 0.25);
+	box-shadow: 0px 0px 55px 2px #000116;
+	backdrop-filter: blur(25px);
+	transition: all 400ms ease-in-out;
+
+	transform: scale(0);
+	opacity: 0;
+	visibility: hidden;
+
+	border-radius: 30px;
+	width: 400px;
+	height: 500px;
+	padding: 50px;
+}
+
+.modal.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.modal.active .modal__content {
+	opacity: 1;
+	visibility: visible;
+	transform: scale(100%);
+}

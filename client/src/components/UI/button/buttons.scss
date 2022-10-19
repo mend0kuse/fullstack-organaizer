@@ -1,0 +1,23 @@
+@import "../../../mixins.scss";
+
+.btn-white {
+	display: block;
+	background-color: white;
+	transition: 0.2s linear all;
+	border-radius: 10px;
+	color: black;
+	padding: 5px 15px;
+	cursor: pointer;
+	&:hover {
+		transform: scale(1.05);
+	}
+}
+.btn-bgnone {
+	background: none;
+	font-size: $fsUp;
+	color: white;
+	font-weight: 500;
+	cursor: pointer;
+	border: none;
+	display: block;
+}

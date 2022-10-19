@@ -1,0 +1,77 @@
+@import "../../../mixins.scss";
+
+.board-project {
+	min-width: 260px;
+
+	&__inner {
+		border-radius: 30px;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		row-gap: 10px;
+		min-height: 350px;
+	}
+
+	&__head {
+	}
+	&__head.pink {
+		background-color: #e872ff;
+	}
+	&__head.yellow {
+		background-color: #ffc120;
+	}
+	&__head.blue {
+		background-color: #00b6ef;
+	}
+}
+.head-board {
+	margin-bottom: 10px;
+	border-radius: 20px;
+	max-width: 100%;
+	padding: 0 25px 0 20px;
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	&__delete {
+		position: absolute;
+		background: none;
+		left: 15px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	&__add {
+		color: white;
+		background: none;
+		position: absolute;
+		font-size: 25px;
+		cursor: pointer;
+		right: 15px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+	&__name {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 25px;
+		font-weight: bold;
+		color: $mainColorWhite;
+		text-align: center;
+	}
+}
+.head-board-enter {
+	transform: scale(0);
+}
+.head-board-enter-active {
+	transform: scale(100%);
+	transition: all 400ms ease-in-out;
+}
+.head-board-exit {
+	transform: scale(100%);
+}
+.head-board-exit-active {
+	transform: scale(0);
+	transition: all 400ms ease-in-out;
+}
