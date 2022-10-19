@@ -22,8 +22,6 @@ interface ItemFormProps {
 
 const KanbanItemForm: FC<ItemFormProps> = ({ itemToUpdate, board, typeForm, addItem, itemDesc, setItemDesc, updateItem }) => {
 
-	const itemLogic = new KanbanBoardItemLogic()
-
 	function create(e: React.FormEvent) {
 		e.preventDefault()
 		if (board) {
@@ -33,10 +31,8 @@ const KanbanItemForm: FC<ItemFormProps> = ({ itemToUpdate, board, typeForm, addI
 
 	function update(e: React.FormEvent) {
 		e.preventDefault()
-		if (itemToUpdate) {
-			itemLogic.update(itemToUpdate, itemDesc)
-		}
-		if (updateItem && board) {
+		if (itemToUpdate && updateItem) {
+			itemToUpdate.info = itemDesc
 			updateItem()
 		}
 	}

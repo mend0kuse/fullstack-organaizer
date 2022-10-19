@@ -50,7 +50,7 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 
 		setTimeout(() => {
 			setBoards(boards.filter(b => b.id !== id))
-		}, 400)
+		}, 300)
 	}
 
 
@@ -63,7 +63,7 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 
 	return (
 		<div className='project-kanban__board board-project'>
-			<CSSTransition in={anim} timeout={400} mountOnEnter classNames='head-board'>
+			<CSSTransition in={anim} timeout={300} mountOnEnter classNames='head-board'>
 				<div className={`board-project__head head-board ${board.headBg}`} >
 					<button className='head-board__delete' onClick={() => delDesk(board.id)}><img src={trashWhite} alt="" /></button>
 					<h2 className='head-board__name'><span> {board.name}</span></h2>

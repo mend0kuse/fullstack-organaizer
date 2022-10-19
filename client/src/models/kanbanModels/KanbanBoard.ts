@@ -26,10 +26,12 @@ export class KanbanBoardLogic {
 	}
 
 	updateItem(board: KanbanBoard, id: number, info: BoardItemDesc) {
-		const updatedItem = new KanbanBoardItem(id, info)
-
 		let asd = board.items.map(item => {
-			return item.id == updatedItem.id ? updatedItem : item
+			if (item.id == id) {
+				item.info = info
+				return item
+			}
+			return item
 		})
 
 		board.items = asd

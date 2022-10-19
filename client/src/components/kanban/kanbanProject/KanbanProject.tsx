@@ -27,7 +27,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 	const [boards, setBoards] = useState<KanbanBoard[]>(
 		project.boards.map(b => {
-			const items = b.items.map(i => new KanbanBoardItem(i.id, i.info))
+			const items = b.items.map(i => new KanbanBoardItem(i.id, i.info, i.pinned))
 			return new KanbanBoard(b.id, b.name, b.headBg, items)
 		}
 		))
@@ -59,7 +59,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 	}
 
 	function addNewItem(board: KanbanBoard) {
-		const newItem = new KanbanBoardItem(Date.now(), itemDesc)
+		const newItem = new KanbanBoardItem(Date.now(), itemDesc, false)
 		console.log(newItem);
 
 		board.items.push(newItem)
@@ -81,7 +81,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 		setModalVisible(true)
 	}
 
-	function updateItem() {
+	function finishUpdateItem() {
 		setModalVisible(false)
 		setItemDesc({ title: '', description: '', direction: '' })
 		setItemToUpdate(null)
@@ -120,7 +120,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 				<Button type={ButtonTypes.BG_BLUE} onClick={() => saveProject([project.id, boards])}>Сохранить</Button>
 			</div>
 			<Modal visible={modalVisible} setVisible={setModalVisible}>
-				<KanbanItemForm itemDesc={itemDesc} board={boardAdd} itemToUpdate={itemToUpdate} setItemDesc={setItemDesc} typeForm={formType} addItem={addNewItem} updateItem={updateItem} />
+				<KanbanItemForm itemDesc={itemDesc} board={boardAdd} itemToUpdate={itemToUpdate} setItemDesc={setItemDesc} typeForm={formType} addItem={addNewItem} updateItem={finishUpdateItem} />
 			</Modal>
 
 		</div >

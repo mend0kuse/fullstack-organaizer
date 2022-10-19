@@ -91,7 +91,7 @@ const KanbanBoardItemComp: FC<BoardItemProps> = ({ getItemToUpdate, item, board,
 				</div>
 				{hover &&
 					<div className="task-board__btns btns-task">
-						<button className='task-board__delete' onClick={() => getItemToUpdate(item)}>
+						<button className='task-board__edit' onClick={() => getItemToUpdate(item)}>
 							<img src={edit} alt="" />
 						</button>
 						<button className='task-board__delete' onClick={e => delItem(e)}>

@@ -4,10 +4,11 @@ import KanbanBoard from "./KanbanBoard";
 export default class KanbanBoardItem {
 	id: number;
 	info: BoardItemDesc;
-	pinned: boolean = false;
+	pinned: boolean;
 
-	constructor(id: number, info: BoardItemDesc) {
+	constructor(id: number, info: BoardItemDesc, pinned: boolean) {
 		this.id = id;
+		this.pinned = pinned;
 		this.info = info;
 	}
 
@@ -16,9 +17,6 @@ export default class KanbanBoardItem {
 export class KanbanBoardItemLogic {
 	dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
 		e.preventDefault()
-	}
-	update(item: KanbanBoardItem, itemDesc: BoardItemDesc) {
-		item.info = itemDesc;
 	}
 
 	dragStartHandler(item: KanbanBoardItem, board: KanbanBoard, setBoard: (b: KanbanBoard) => void, setItem: (i: KanbanBoardItem) => void) {
