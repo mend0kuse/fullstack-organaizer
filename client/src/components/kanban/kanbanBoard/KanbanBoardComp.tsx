@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard'
-import KanbanBoardItem from '../../../models/kanbanModels/KanbanBoardItem';
+import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
 import { BoardItemDesc, FormsTypes } from '../../../types/KanbanTypes';
-import KanbanBoardItemComp from '../KanbanItem/KanbanBoardItemComp';
+import KanbanBoardItemComp from '../KanbanTask/KanbanBoardTaskComp';
 import './KanbanBoard.scss'
-
-import trashWhite from '../../../img/TrashWhite.svg'
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import { CSSTransition } from 'react-transition-group';
 
 interface BoardProps {
@@ -21,12 +21,12 @@ interface BoardProps {
 	board: KanbanBoard;
 	project: KanbanProject;
 
-	currentBoard: KanbanBoard | undefined
+	currentBoard: KanbanBoard | null
 	setCurrentBoard: (b: KanbanBoard) => void
 
 	getItemToUpdate: (i: KanbanBoardItem) => void
 
-	currentItem: KanbanBoardItem | undefined
+	currentItem: KanbanBoardItem | null
 	setCurrentItem: (i: KanbanBoardItem) => void
 
 	boards: KanbanBoard[];
@@ -65,8 +65,12 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 		<div className='project-kanban__board board-project'>
 			<CSSTransition in={anim} timeout={300} mountOnEnter classNames='head-board'>
 				<div className={`board-project__head head-board ${board.headBg}`} >
-					<button className='head-board__delete' onClick={() => delDesk(board.id)}><img src={trashWhite} alt="" /></button>
-					<h2 className='head-board__name'><span> {board.name}</span></h2>
+					<button className='head-board__delete _icon-Trash' onClick={() => delDesk(board.id)}></button>
+					<Tippy content={board.name} theme="light" >
+						<h2 className='head-board__name'>
+							<span>{board.name}</span>
+						</h2>
+					</Tippy>
 					<button className='head-board__add' onClick={addItemModalShow}>+</button>
 				</div>
 			</CSSTransition>

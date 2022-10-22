@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { Months } from '../../types/CalendarTypes'
 
 interface SelectProps {
@@ -9,7 +9,8 @@ interface SelectProps {
 
 
 const Select: FC<SelectProps> = ({ onChange, value }) => {
-	const monthsSelect = [
+	
+	const monthsSelect = useMemo(() => [
 		{ value: 0, name: Months.JAN },
 		{ value: 1, name: Months.FEB },
 		{ value: 2, name: Months.MARCH },
@@ -22,7 +23,7 @@ const Select: FC<SelectProps> = ({ onChange, value }) => {
 		{ value: 9, name: Months.OCT },
 		{ value: 10, name: Months.NOV },
 		{ value: 11, name: Months.DEC }
-	]
+	], [])
 
 	return (
 		<select

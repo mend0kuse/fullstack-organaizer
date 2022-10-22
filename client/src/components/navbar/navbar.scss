@@ -25,5 +25,8 @@
 		align-items: center;
 		text-decoration: none;
 		color: black;
+		&::before {
+			font-size: 25px;
+		}
 	}
 }

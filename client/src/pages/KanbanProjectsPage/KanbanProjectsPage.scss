@@ -73,6 +73,15 @@
 		button {
 			background: none;
 			margin-bottom: 5px;
+			&::before {
+				color: white;
+				transition: 0.2s linear all;
+			}
+			&:hover {
+				&::before {
+					color: #fffb00;
+				}
+			}
 		}
 	}
 }

@@ -1,23 +1,5 @@
 @import "../../../mixins.scss";
 
-.modal__content-enter {
-	transform: scale(0);
-	opacity: 0;
-}
-.modal__content-enter-active {
-	opacity: 1;
-	transition: all 400ms ease-in-out;
-	transform: scale(100%);
-}
-.modal__content-exit {
-	transform: scale(100%);
-	opacity: 1;
-}
-.modal__content-exit-active {
-	transform: scale(0);
-	opacity: 0;
-}
-
 .modal {
 	position: fixed;
 	display: flex;
@@ -38,7 +20,7 @@
 	background: rgba(216, 230, 255, 0.25);
 	box-shadow: 0px 0px 55px 2px #000116;
 	backdrop-filter: blur(25px);
-	transition: all 400ms ease-in-out;
+	transition: all 200ms ease-in-out;
 
 	transform: scale(0);
 	opacity: 0;

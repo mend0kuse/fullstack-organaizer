@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard';
-import KanbanBoardItem from '../../../models/kanbanModels/KanbanBoardItem';
+import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
 import { BoardHeadColors, BoardItemDesc, ButtonTypes, FormsTypes } from '../../../types/KanbanTypes';
 import Modal from '../../UI/modal/modal';
@@ -13,6 +13,7 @@ import mark from '../../../img/mark.svg'
 import KanbanAddField from '../KanbanAddField';
 import Button from '../../UI/button/Button';
 import { kanbanApi } from '../../../services/service';
+import KanbanTask from '../../../models/kanbanModels/KanbanTask';
 
 interface KanbanProps {
 	project: KanbanProject;
@@ -22,8 +23,8 @@ interface KanbanProps {
 
 const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
-	const [deleteProject] = kanbanApi.useDeleteProjectMutation()
-	const [saveProject] = kanbanApi.useUpdateProjectMutation()
+	const [deleteProject] = kanbanApi.useDeleteProjectMutation() //запрос на удаление с бд
+	const [saveProject] = kanbanApi.useUpdateProjectMutation() //запрос на обновление проекта в бд
 
 	const [boards, setBoards] = useState<KanbanBoard[]>(
 		project.boards.map(b => {
@@ -37,15 +38,15 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 	const [itemDesc, setItemDesc] = useState<BoardItemDesc>({ title: '', description: '', direction: '' }) // описание итема
 
-	const [currentBoard, setCurrentBoard] = useState<KanbanBoard | undefined>()//доска из которой тянут элемент
-	const [currentItem, setCurrentItem] = useState<KanbanBoardItem | undefined>()//элемент,который тянут
+	const [currentBoard, setCurrentBoard] = useState<KanbanBoard | null>(null)//доска из которой тянут элемент
+	const [currentItem, setCurrentItem] = useState<KanbanTask | null>(null)//элемент,который тянут
 
 	const [modalVisible, setModalVisible] = useState(false) // видимость модалки
 
 	const [boardAdd, setBoardAdd] = useState<KanbanBoard | undefined>() //доска в которую надо добавить
 
 	const [formType, setFormType] = useState<FormsTypes>()
-	const [itemToUpdate, setItemToUpdate] = useState<KanbanBoardItem | null>(null)
+	const [itemToUpdate, setItemToUpdate] = useState<KanbanTask | null>(null)
 
 	const [colorNumber, setColorNumber] = useState(0)
 
@@ -74,7 +75,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 		setItemDesc({ title: '', description: '', direction: '' })
 	}
 
-	function getItemToUpdate(item: KanbanBoardItem) {
+	function getItemToUpdate(item: KanbanTask) {
 		setItemDesc({ title: item.info.title, description: item.info.description, direction: item.info.direction })
 		setItemToUpdate(item)
 		setFormType(FormsTypes.UPDATe)
@@ -112,7 +113,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 				)}
 				<div className='project-kanban__add-desk add-desk'>
 					{newDeskInp && <KanbanAddField className='add-desk__field' value={newDeskTitle} setValue={setNewDeskTitle} fn={addDesk} />}
-					<Button type={ButtonTypes.BG_NONE} className='add-desk__btn' onClick={newDeskInp ? () => setNewDeskInp(false) : () => setNewDeskInp(true)}>{newDeskInp ? 'Закрыть' : '+ Доска'}</Button>
+					<Button type={ButtonTypes.BG_NONE} className='add-desk__btn' onClick={e => setNewDeskInp(!newDeskInp)}>{newDeskInp ? 'Закрыть' : '+ Доска'}</Button>
 				</div>
 			</div>
 			<div className='project-kanban__buttons'>

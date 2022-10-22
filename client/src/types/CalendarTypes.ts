@@ -14,7 +14,8 @@ export enum Months {
 }
 
 export interface IEvent {
-	name: string;
+	content: string;
 	dayId: string;
 }
+
 export type DayInner = (number | undefined)

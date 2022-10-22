@@ -1,38 +1,33 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { Day } from '../../models/calendarModels/Day'
 import { useNavigate } from 'react-router-dom'
 
 interface CalendarDayProps {
 	day: Day;
-	setCurrentDay: (day: Day) => void;
+	setAddedDay: (day: Day) => void;
 	setEventModal: (visible: boolean) => void;
 }
 
-const CalendarDay: FC<CalendarDayProps> = ({ day, setCurrentDay, setEventModal }) => {
+const CalendarDay: FC<CalendarDayProps> = ({ day, setAddedDay, setEventModal }) => {
 	const router = useNavigate()
 
-	function openEventModal(): void {
-		setCurrentDay(day)
-		setEventModal(true)
-	}
+	const openEventModal = useCallback(
+		() => {
+			setAddedDay(day)
+			setEventModal(true)
+		}, [setAddedDay, setEventModal, day])
+
 
 	return (
-		<div className='inner-calendar__day day-calendar'>
-			<div className='day-calendar__number'>{day.number}</div>
-			{day.number
-				?
-				<div className='day-calendar__buttons'>
-					<button onClick={openEventModal}>Добавить</button>
-					<button onClick={() => router(`/calendar/${day.id}`)}>Открыть</button>
-				</div>
-				: ''
-			}
-			{
-				day.events.length
-					? <div className='day-calendar__events'>событий:{day.events.length}</div>
-					: <div></div>
-			}
-		</div>
+		<div className={day.number ? 'inner-calendar__day day-calendar' : 'inner-calendar__day day-calendar empty'}>
+			{day.number && <div className='day-calendar__number'>{day.number}</div>}
+			{day.number && <button className='day-calendar__add ' onClick={openEventModal}>+</button>}
+			{day.number && <button className='day-calendar__open _icon-open' onClick={() => router(`/calendar/${day.id}`)}></button>}
+			{day.number && day.events.length > 0 &&
+				<div className='day-calendar__events'>
+					событий:{day.events.length}
+				</div>}
+		</div >
 	)
 }
 

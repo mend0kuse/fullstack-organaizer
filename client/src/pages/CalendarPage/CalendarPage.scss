@@ -1,14 +1,25 @@
 .calendar {
-	&__container {
-		max-width: 1200px;
-		padding-top: 20px;
-		margin: 0 auto;
-	}
-	&__title {
-		text-align: center;
-	}
 	&__navigation {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
+	}
+}
+.navigation-calendar {
+	&__btn {
+		background: none;
+		&::before {
+			font-size: 40px;
+			transition: 0.2s linear all;
+			color: rgba(255, 255, 255, 0.5);
+		}
+		&:hover {
+			&::before {
+				color: white;
+			}
+		}
+	}
+	&-next {
+		transform: rotate(-180deg);
 	}
 }

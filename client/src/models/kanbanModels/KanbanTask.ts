@@ -1,7 +1,7 @@
 import { BoardItemDesc } from '../../types/KanbanTypes';
 import KanbanBoard from "./KanbanBoard";
 
-export default class KanbanBoardItem {
+export default class KanbanTask {
 	id: number;
 	info: BoardItemDesc;
 	pinned: boolean;
@@ -14,17 +14,17 @@ export default class KanbanBoardItem {
 
 }
 
-export class KanbanBoardItemLogic {
+export class KanbanTaskLogic {
 	dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
 		e.preventDefault()
 	}
 
-	dragStartHandler(item: KanbanBoardItem, board: KanbanBoard, setBoard: (b: KanbanBoard) => void, setItem: (i: KanbanBoardItem) => void) {
+	dragStartHandler(item: KanbanTask, board: KanbanBoard, setBoard: (b: KanbanBoard) => void, setItem: (i: KanbanTask) => void) {
 		setBoard(board)
 		setItem(item)
 	}
 
-	dropHandler(e: React.DragEvent<HTMLDivElement>, board: KanbanBoard, item: KanbanBoardItem, currentBoard: KanbanBoard | undefined, currentItem: KanbanBoardItem | undefined, boards: KanbanBoard[], setBoards: (arr: KanbanBoard[]) => void) {
+	dropHandler(e: React.DragEvent<HTMLDivElement>, board: KanbanBoard, item: KanbanTask, currentBoard: KanbanBoard | null, currentItem: KanbanTask | null, boards: KanbanBoard[], setBoards: (arr: KanbanBoard[]) => void) {
 		e.preventDefault()
 		// e.target.style.boxShadow = 'none'
 
@@ -42,7 +42,7 @@ export class KanbanBoardItemLogic {
 		}
 	}
 
-	pin(item: KanbanBoardItem) {
+	pin(item: KanbanTask) {
 		item.pinned = item.pinned ? false : true
 	}
 }

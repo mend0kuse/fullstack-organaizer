@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import KanbanBoard from '../../../models/kanbanModels/KanbanBoard';
-import KanbanBoardItem, { KanbanBoardItemLogic } from '../../../models/kanbanModels/KanbanBoardItem';
+import KanbanTask from '../../../models/kanbanModels/KanbanTask';
 import { BoardItemDesc, ButtonTypes, FormsTypes } from '../../../types/KanbanTypes'
 import Button from '../../UI/button/Button';
 import InputWithUp from '../../UI/input/InputWithUp';
@@ -8,7 +8,7 @@ import './kanabanForms.scss'
 
 interface ItemFormProps {
 
-	itemToUpdate?: KanbanBoardItem | null;
+	itemToUpdate?: KanbanTask | null;
 	typeForm: FormsTypes | undefined;
 
 	itemDesc: BoardItemDesc;

@@ -1,5 +1,5 @@
 import { BoardItemDesc } from "../../types/KanbanTypes";
-import KanbanBoardItem from "./KanbanBoardItem";
+import KanbanBoardItem from "./KanbanTask";
 
 export default class KanbanBoard {
 	id: number;
@@ -41,7 +41,7 @@ export class KanbanBoardLogic {
 	// 	return this.items
 	// }
 
-	dropCardHandler(e: React.DragEvent<HTMLDivElement>, board: KanbanBoard, currentBoard: KanbanBoard | undefined, currentItem: KanbanBoardItem | undefined, boards: KanbanBoard[], setBoards: (arr: KanbanBoard[]) => void) {
+	dropCardHandler(e: React.DragEvent<HTMLDivElement>, board: KanbanBoard, currentBoard: KanbanBoard | null, currentItem: KanbanBoardItem | null, boards: KanbanBoard[], setBoards: (arr: KanbanBoard[]) => void) {
 		const arraytId = board.items.map(item => item.id)
 
 		if (currentItem && currentBoard) {

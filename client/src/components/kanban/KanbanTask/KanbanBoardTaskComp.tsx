@@ -1,32 +1,29 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
 import KanbanBoard from '../../../models/kanbanModels/KanbanBoard';
-import KanbanBoardItem, { KanbanBoardItemLogic } from '../../../models/kanbanModels/KanbanBoardItem'
 import './KanbanItem.scss'
 import { CSSTransition } from 'react-transition-group';
 
-import edit from '../../../img/edit.svg'
-import trash from '../../../img/Trash.svg'
-import pin from '../../../img/Pin.svg'
+import KanbanTask, { KanbanTaskLogic } from '../../../models/kanbanModels/KanbanTask';
 
-interface BoardItemProps {
-	item: KanbanBoardItem;
+interface BoardTaskProps {
+	item: KanbanTask;
 	board: KanbanBoard;
 
-	getItemToUpdate: (i: KanbanBoardItem) => void
+	getItemToUpdate: (i: KanbanTask) => void
 
-	currentBoard: KanbanBoard | undefined
+	currentBoard: KanbanBoard | null
 	setCurrentBoard: (b: KanbanBoard) => void
 	setBoardAdd: (b: KanbanBoard) => void
 
-	currentItem: KanbanBoardItem | undefined
-	setCurrentItem: (i: KanbanBoardItem) => void
+	currentItem: KanbanTask | null
+	setCurrentItem: (i: KanbanTask) => void
 
 	boards: KanbanBoard[];
 	setBoards: (arr: KanbanBoard[]) => void;
 }
 
-const KanbanBoardItemComp: FC<BoardItemProps> = ({ getItemToUpdate, item, board, boards, setBoards, currentBoard, currentItem, setCurrentBoard, setBoardAdd, setCurrentItem }) => {
-	const itemLogic = new KanbanBoardItemLogic()
+const KanbanBoardTaskComp: FC<BoardTaskProps> = ({ getItemToUpdate, item, board, boards, setBoards, currentBoard, currentItem, setCurrentBoard, setBoardAdd, setCurrentItem }) => {
+	const itemLogic = new KanbanTaskLogic()
 
 	const [anim, setAnim] = useState(false)
 
@@ -81,9 +78,7 @@ const KanbanBoardItemComp: FC<BoardItemProps> = ({ getItemToUpdate, item, board,
 				onDragStart={pinned ? e => e.preventDefault() : (e) => itemLogic.dragStartHandler(item, board, setCurrentBoard, setCurrentItem)}
 				onDrop={(e) => itemLogic.dropHandler(e, board, item, currentBoard, currentItem, boards, setBoards)}
 			>
-				{(hover || pinned)
-					&& <button className='task-board__pin' onClick={() => addOrRemovePin()}><img src={pin} alt="" /></button>
-				}
+				{(hover || pinned) && <button className={pinned ? 'task-board__pin pinned  _icon-Pin' : 'task-board__pin _icon-Pin'} onClick={() => addOrRemovePin()}></button>}
 				<div className='task-board__info info-task'>
 					<p className='info-task__direction'>{item.info.direction}</p>
 					<p className='info-task__title'>{item.info.title}</p>
@@ -91,11 +86,9 @@ const KanbanBoardItemComp: FC<BoardItemProps> = ({ getItemToUpdate, item, board,
 				</div>
 				{hover &&
 					<div className="task-board__btns btns-task">
-						<button className='task-board__edit' onClick={() => getItemToUpdate(item)}>
-							<img src={edit} alt="" />
+						<button className='btns-task__edit _icon-edit' onClick={() => getItemToUpdate(item)}>
 						</button>
-						<button className='task-board__delete' onClick={e => delItem(e)}>
-							<img src={trash} alt="" />
+						<button className='btns-task__delete _icon-Trash' onClick={e => delItem(e)}>
 						</button>
 					</div>}
 			</div>
@@ -103,4 +96,4 @@ const KanbanBoardItemComp: FC<BoardItemProps> = ({ getItemToUpdate, item, board,
 	)
 }
 
-export default KanbanBoardItemComp
+export default KanbanBoardTaskComp

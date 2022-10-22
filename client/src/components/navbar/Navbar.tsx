@@ -15,34 +15,10 @@ const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
 		<nav className={navbarOpen ? 'navbar show' : 'navbar'}>
 			<ul className='navbar__list list-navbar'>
 				<li className='list-navbar__item'>
-					<Link className='list-navbar__link' to='/calendar'>
-						<img src={calendar} alt="календарь" />
-						<span>Календарь</span>
-					</Link>
+					<Link className='list-navbar__link _icon-Calendar' to='/calendar'>Календарь</Link>
 				</li>
 				<li className='list-navbar__item'>
-					<Link className='list-navbar__link' to='/kanban'>
-						<img src={doc} alt="канбан" />
-						<span>Канбан</span>
-					</Link>
-				</li>
-				<li className='list-navbar__item'>
-					<Link className='list-navbar__link' to='/calendar'>
-						<img src={calendar} alt="календарь" />
-						<span>Календарь</span>
-					</Link>
-				</li>
-				<li className='list-navbar__item'>
-					<Link className='list-navbar__link' to='/kanban'>
-						<img src={doc} alt="канбан" />
-						<span>Канбан</span>
-					</Link>
-				</li>
-				<li className='list-navbar__item'>
-					<Link className='list-navbar__link' to='/kanban'>
-						<img src={doc} alt="канбан" />
-						<span>Канбан</span>
-					</Link>
+					<Link className='list-navbar__link _icon-Document' to='/kanban'>Канбан</Link>
 				</li>
 			</ul>
 		</nav>

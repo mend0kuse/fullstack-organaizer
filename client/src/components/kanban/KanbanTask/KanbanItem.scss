@@ -1,6 +1,5 @@
 @import "../../../mixins.scss";
 
-
 .task-board-enter {
 	opacity: 0;
 	transform: scale(0);
@@ -29,11 +28,19 @@
 	background-color: $mainColorWhite;
 	display: flex;
 	flex-direction: column;
+	&__pin.pinned {
+		&::before {
+			color: rgb(255, 0, 0);
+		}
+	}
 	&__pin {
 		position: absolute;
 		right: 10px;
 		top: 10px;
 		background: none;
+		&::before {
+			font-size: 25px;
+		}
 	}
 }
 .info-task {
@@ -63,8 +70,18 @@
 	align-self: center;
 	position: absolute;
 	display: flex;
+	column-gap: 10px;
 	bottom: 0;
 	button {
 		background: none;
+		&::before {
+			font-size: 25px;
+			transition: 0.2s linear all;
+		}
+		&:hover {
+			&::before {
+				color: rgb(255, 0, 0);
+			}
+		}
 	}
 }

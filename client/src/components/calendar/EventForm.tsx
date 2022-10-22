@@ -3,18 +3,20 @@ import { Day } from '../../models/calendarModels/Day';
 
 interface EventFormProps {
 	value: string;
-	current: Day | undefined;
+	addedDay: Day | undefined;
 	visible: (visible: boolean) => void
 	onChange: (value: string) => void
-	addEvent: (day: Day | undefined, value: string) => void
+	addEvent: (day: Day, value: string) => void
 }
 
 
-const EventForm: FC<EventFormProps> = ({ visible, current, value, onChange, addEvent }) => {
+const EventForm: FC<EventFormProps> = ({ visible, addedDay, value, onChange, addEvent }) => {
 	function submitEvent(e: React.FormEvent) {
 		e.preventDefault()
 		visible(false)
-		addEvent(current, value)
+		if (addedDay) {
+			addEvent(addedDay, value)
+		}
 		onChange('')
 	}
 	return (
