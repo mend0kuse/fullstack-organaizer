@@ -1,15 +1,15 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import Kanban from '../../components/kanban/kanbanProject/KanbanProject'
 import KanbanProject from '../../models/kanbanModels/KanbanProject'
 import './KanbanProjectsPage.scss'
 
 import KanbanAddField from '../../components/kanban/KanbanAddField'
-import { kanbanApi } from '../../services/service'
+import { kanbanApi } from '../../services/kanbanApi'
 
 const KanbanProjectsPage: FC = () => {
 
 	const { data } = kanbanApi.useGetProjectsQuery('') //получение с базы проектов
-	const [createProj, info] = kanbanApi.useCreateProjectMutation() // функция создания проекта из kanbanApi
+	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта из kanbanApi
 
 
 	const kanbProjects = data?.map(i => {
@@ -20,16 +20,18 @@ const KanbanProjectsPage: FC = () => {
 	const [nameProject, setNameProject] = useState('') // название проекта
 	const [nameInp, setNameInp] = useState(false) //видимость поля ввода имени проекта
 
-	async function addProject() {
-		if (nameProject.length !== 0) {
-			const newProj = new KanbanProject(Date.now(), nameProject, [])
-			await createProj(newProj)
-			hideField()
-		}
-	}
+	const addProject = useCallback(
+		async () => {
+			if (nameProject.length !== 0) {
+				const newProj = new KanbanProject(Date.now(), nameProject, [])
+				await createProj(newProj).unwrap().then(response => setActiveProjectId(response.id))
+				hideField()
+			}
+		}, [nameProject])
+
 
 	function hideField() {
-		console.log(data);
+		// setActiveProjectId(info.data?.id)
 		setNameInp(false)
 		setNameProject('')
 	}

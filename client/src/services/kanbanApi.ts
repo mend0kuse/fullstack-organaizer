@@ -29,7 +29,10 @@ export const kanbanApi = createApi({
 				method: 'POST',
 				body: { ...newProj }
 			}),
-			invalidatesTags: ['kanban']
+			invalidatesTags: ['kanban'],
+			transformResponse: (response: KanbanProject): KanbanProject => {
+				return response
+			}
 		}),
 		//обновление проекта
 		updateProject: builder.mutation<KanbanProject, [number, KanbanBoard[]]>({

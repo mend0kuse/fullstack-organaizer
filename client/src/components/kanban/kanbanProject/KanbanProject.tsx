@@ -12,7 +12,7 @@ import KanbanItemForm from '../kanbanForms/KanbanItemForm';
 import mark from '../../../img/mark.svg'
 import KanbanAddField from '../KanbanAddField';
 import Button from '../../UI/button/Button';
-import { kanbanApi } from '../../../services/service';
+import { kanbanApi } from '../../../services/kanbanApi';
 import KanbanTask from '../../../models/kanbanModels/KanbanTask';
 
 interface KanbanProps {

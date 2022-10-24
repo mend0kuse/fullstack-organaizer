@@ -15,4 +15,7 @@ $fsTitle: 30px;
 	margin: 0 auto;
 	width: 1000px;
 	padding: 0 15px;
+	@media (min-width: 1600px) {
+		width: 1500px;
+	}
 }

@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { calendarApi } from '../services/calendarApi'
-import { kanbanApi } from '../services/service'
+import { kanbanApi } from '../services/kanbanApi'
 // import { todosSlice } from './reducers/calendarReducer'
 
 

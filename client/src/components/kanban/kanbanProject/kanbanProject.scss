@@ -25,7 +25,10 @@
 	}
 
 	&__inner {
-		max-height: 470px;
+		height: 500px;
+		@media (min-width: 1600px) {
+			height: 850px;
+		}
 		display: flex;
 		gap: 30px;
 		padding-right: 50px;

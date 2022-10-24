@@ -1,6 +1,7 @@
 import React, { FC, useCallback } from 'react'
 import { Day } from '../../models/calendarModels/Day'
 import { useNavigate } from 'react-router-dom'
+import Tippy from '@tippyjs/react';
 
 interface CalendarDayProps {
 	day: Day;
@@ -24,8 +25,16 @@ const CalendarDay: FC<CalendarDayProps> = ({ day, setAddedDay, setEventModal }) 
 			{day.number && <button className='day-calendar__add ' onClick={openEventModal}>+</button>}
 			{day.number && <button className='day-calendar__open _icon-open' onClick={() => router(`/calendar/${day.id}`)}></button>}
 			{day.number && day.events.length > 0 &&
-				<div className='day-calendar__events'>
-					событий:{day.events.length}
+				<div className='day-calendar__events events-calendar'>
+					{day.events.map(ev => {
+						return (
+							<Tippy content={ev.content}>
+								<div className='events-calendar__item'>
+							
+								</div>
+							</Tippy>
+						)
+					})}
 				</div>}
 		</div >
 	)
