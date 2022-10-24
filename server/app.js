@@ -28,7 +28,7 @@ app.use('/calendar', routerCalendar)
 
 async function dbsConnect() {
 	try {
-		await mongoose.connect('mongodb://0.0.0.0:27017/organaizer');
+		await mongoose.connect('mongodb://10.100.3.210:27017/usersdb_20054');
 		console.log('База подключена');
 	} catch (error) {
 		console.log(error);
