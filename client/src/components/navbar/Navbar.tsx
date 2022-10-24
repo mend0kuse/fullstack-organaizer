@@ -20,6 +20,12 @@ const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
 				<li className='list-navbar__item'>
 					<Link className='list-navbar__link _icon-Document' to='/kanban'>Канбан</Link>
 				</li>
+				<li className='list-navbar__item'>
+					<Link className='list-navbar__link ' to='/registration'>РЕГИСТРАЦИЯ</Link>
+				</li>
+				<li className='list-navbar__item'>
+					<Link className='list-navbar__link ' to='/login'>вход</Link>
+				</li>
 			</ul>
 		</nav>
 	)

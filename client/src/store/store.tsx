@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { authService } from '../services/authService'
 import { calendarApi } from '../services/calendarApi'
 import { kanbanApi } from '../services/kanbanApi'
 // import { todosSlice } from './reducers/calendarReducer'
@@ -7,14 +8,15 @@ import { kanbanApi } from '../services/kanbanApi'
 const rootReducer = combineReducers({
 	// events: todosSlice.reducer,
 	[kanbanApi.reducerPath]: kanbanApi.reducer,
-	[calendarApi.reducerPath]: calendarApi.reducer
+	[calendarApi.reducerPath]: calendarApi.reducer,
+	[authService.reducerPath]: authService.reducer,
 })
 
 
 export const store = configureStore({
 	reducer: rootReducer,
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(kanbanApi.middleware).concat(calendarApi.middleware)
+		getDefaultMiddleware().concat(kanbanApi.middleware).concat(calendarApi.middleware).concat(authService.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -1,18 +1,20 @@
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import Kanban from '../../components/kanban/kanbanProject/KanbanProject'
 import KanbanProject from '../../models/kanbanModels/KanbanProject'
 import './KanbanProjectsPage.scss'
 
 import KanbanAddField from '../../components/kanban/KanbanAddField'
 import { kanbanApi } from '../../services/kanbanApi'
+import { AuthToken } from '../../context/authContext'
 
 const KanbanProjectsPage: FC = () => {
+	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
-	const { data } = kanbanApi.useGetProjectsQuery('') //получение с базы проектов
+	const { data } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
 	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта из kanbanApi
 
 
-	const kanbProjects = data?.map(i => {
+	const kanbProjects = data?.map((i, index) => {
 		return new KanbanProject(i.id, i.name, i.boards)
 	})
 

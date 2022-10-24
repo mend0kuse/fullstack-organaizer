@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
 import KanbanBoard from '../models/kanbanModels/KanbanBoard'
 import KanbanProject from '../models/kanbanModels/KanbanProject'
 
@@ -9,8 +10,11 @@ export const kanbanApi = createApi({
 	endpoints: (builder) => ({
 		//получение проектов
 		getProjects: builder.query<KanbanProject[], string>({
-			query: () => ({
+			query: (token) => ({
 				url: `/projects`,
+				headers: {
+					authorization: token
+				}
 			}),
 			providesTags: result => ['kanban'],
 		}),

@@ -1,15 +1,21 @@
 import express from 'express'
+import { authMiddleware } from '../middleware/authMiddleware.js';
 
 export const routerKanban = express.Router();
 import { Kanban } from '../models/Kanban.js';
 
-routerKanban.get('/', async (req, res) => {
-	const result = await Kanban.find()
-	res.send(result)
+routerKanban.get('/', authMiddleware, async (req, res) => {
+	try {
+		const result = await Kanban.find()
+		res.status(200).send(result)
+	} catch (error) {
+		res.status(400).send('error')
+	}
+
 })
 
 //создание проекта
-routerKanban.post('/', async (req, res) => {
+routerKanban.post('/', authMiddleware, async (req, res) => {
 	try {
 		const newProj = new Kanban({ ...req.body })
 		await newProj.save()
