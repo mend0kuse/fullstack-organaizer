@@ -1,9 +1,21 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+export interface User {
+	_id: string;
+	username: string;
+	avatar?: string;
+}
+export interface UserWithAvatar {
+	_id: string;
+	username: string;
+	avatar: string;
+}
+
 
 export const authService = createApi({
 	reducerPath: 'authService',
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+	tagTypes: ['lk'],
 	endpoints: (builder) => ({
 		//регистрация
 		registration: builder.mutation({
@@ -23,22 +35,22 @@ export const authService = createApi({
 			}),
 		}),
 
-		userInfo: builder.query({
+		userInfo: builder.query<User, string>({
 			query: (token) => ({
 				url: `/lk`,
 				headers: {
 					authorization: token
 				}
 			}),
+			providesTags: result => ['lk'],
 		}),
-		sendAvatar: builder.mutation({
-			query: (file) => ({
+		sendAvatar: builder.mutation<UserWithAvatar, FormData>({
+			query: (form) => ({
 				url: `/lk/avatar`,
 				method: 'POST',
-				body: {
-					file: file
-				}
+				body: form,
 			}),
+			invalidatesTags: ['lk'],
 		}),
 
 
