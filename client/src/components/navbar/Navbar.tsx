@@ -26,6 +26,9 @@ const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
 				<li className='list-navbar__item'>
 					<Link className='list-navbar__link ' to='/login'>вход</Link>
 				</li>
+				<li className='list-navbar__item'>
+					<Link className='list-navbar__link ' to='/lk'>Кабинет</Link>
+				</li>
 			</ul>
 		</nav>
 	)

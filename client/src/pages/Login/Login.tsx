@@ -16,7 +16,7 @@ const Login = () => {
 		await login(loginData)
 			.unwrap()
 			.then(resolve => {
-				router('/kanban')
+				router('/lk')
 				setJwtToken(resolve.token)
 			})
 			.catch(reject => alert(reject.data.message))

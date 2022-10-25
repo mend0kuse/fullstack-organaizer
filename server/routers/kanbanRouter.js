@@ -15,7 +15,7 @@ routerKanban.get('/', authMiddleware, async (req, res) => {
 })
 
 //создание проекта
-routerKanban.post('/', authMiddleware, async (req, res) => {
+routerKanban.post('/', async (req, res) => {
 	try {
 		const newProj = new Kanban({ ...req.body })
 		await newProj.save()

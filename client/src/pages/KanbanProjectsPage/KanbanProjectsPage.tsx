@@ -10,7 +10,7 @@ import { AuthToken } from '../../context/authContext'
 const KanbanProjectsPage: FC = () => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
-	const { data } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
+	const { data, isError } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
 	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта из kanbanApi
 
 
@@ -40,6 +40,7 @@ const KanbanProjectsPage: FC = () => {
 
 	return (
 		<div className='kanban__container'>
+			{isError && <h1>Авторизуйтесь</h1>}
 			<h2 className='sect-title kanban__title'>Канбан-проекты</h2>
 			<div className='kanban__tabs tabs-kanban'>
 				<div className="tabs-kanban__names">
