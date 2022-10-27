@@ -19,5 +19,4 @@ export const routes: IRoute[] = [
 	{ path: '/registration', element: <Registration /> },
 	{ path: '/login', element: <Login /> },
 	{ path: '/lk', element: <Lk /> },
-
 ]

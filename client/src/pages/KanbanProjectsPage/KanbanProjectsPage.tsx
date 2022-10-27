@@ -6,17 +6,30 @@ import './KanbanProjectsPage.scss'
 import KanbanAddField from '../../components/kanban/KanbanAddField'
 import { kanbanApi } from '../../services/kanbanApi'
 import { AuthToken } from '../../context/authContext'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux/reduxHooks'
+import { addKanbProject } from '../../store/store'
 
 const KanbanProjectsPage: FC = () => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
+	const projects = useAppSelector((state) => state.kanban.projects)
+	const dispatch = useAppDispatch()
+
+	let kanbProjects: KanbanProject[] = []
+
 	const { data, isError } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
-	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта из kanbanApi
+	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта из в базу данных
 
-
-	const kanbProjects = data?.map((i, index) => {
-		return new KanbanProject(i.id, i.name, i.boards)
-	})
+	//ЕСЛИ ПОЛЬЗОВАТЕЛЬ АВТОРИЗОВАН,ТО ПРОЕКТЫ С БАЗЫ,ЕСЛИ НЕТ,ТО РАБОТАЕТ С ПРОЕКТАМИ С РЕДАКСА
+	if (jwtToken && data) {
+		kanbProjects = data.map(i => {
+			return new KanbanProject(i.id, i.name, i.boards)
+		})
+	} else {
+		kanbProjects = projects.map(i => {
+			return new KanbanProject(i.id, i.name, i.boards)
+		})
+	}
 
 	const [activeProjectId, setActiveProjectId] = useState<number>() //id открытого проекта
 	const [nameProject, setNameProject] = useState('') // название проекта
@@ -26,21 +39,24 @@ const KanbanProjectsPage: FC = () => {
 		async () => {
 			if (nameProject.length !== 0) {
 				const newProj = new KanbanProject(Date.now(), nameProject, [])
-				await createProj(newProj).unwrap().then(response => setActiveProjectId(response.id))
+				if (jwtToken) {
+					await createProj(newProj)
+				} else {
+					dispatch(addKanbProject(newProj))
+				}
+				setActiveProjectId(newProj.id)
 				hideField()
 			}
-		}, [nameProject])
+		}, [nameProject, jwtToken])
 
 
 	function hideField() {
-		// setActiveProjectId(info.data?.id)
 		setNameInp(false)
 		setNameProject('')
 	}
 
 	return (
 		<div className='kanban__container'>
-			{isError && <h1>Авторизуйтесь</h1>}
 			<h2 className='sect-title kanban__title'>Канбан-проекты</h2>
 			<div className='kanban__tabs tabs-kanban'>
 				<div className="tabs-kanban__names">

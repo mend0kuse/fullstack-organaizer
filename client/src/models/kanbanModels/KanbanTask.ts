@@ -11,7 +11,6 @@ export default class KanbanTask {
 		this.pinned = pinned;
 		this.info = info;
 	}
-
 }
 
 export class KanbanTaskLogic {

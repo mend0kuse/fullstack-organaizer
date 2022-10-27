@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard';
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -14,6 +14,9 @@ import KanbanAddField from '../KanbanAddField';
 import Button from '../../UI/button/Button';
 import { kanbanApi } from '../../../services/kanbanApi';
 import KanbanTask from '../../../models/kanbanModels/KanbanTask';
+import { AuthToken } from '../../../context/authContext';
+import { useAppDispatch } from '../../../hooks/redux/reduxHooks';
+import { deleteKanbProject, saveKanbProject } from '../../../store/store';
 
 interface KanbanProps {
 	project: KanbanProject;
@@ -22,6 +25,10 @@ interface KanbanProps {
 }
 
 const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
+	const { jwtToken, setJwtToken } = useContext(AuthToken)
+
+
+	const dispatch = useAppDispatch()
 
 	const [deleteProject] = kanbanApi.useDeleteProjectMutation() //запрос на удаление с бд
 	const [saveProject] = kanbanApi.useUpdateProjectMutation() //запрос на обновление проекта в бд
@@ -61,7 +68,6 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 	function addNewItem(board: KanbanBoard) {
 		const newItem = new KanbanBoardItem(Date.now(), itemDesc, false)
-		console.log(newItem);
 
 		board.items.push(newItem)
 		setBoards(boards.map(b => {
@@ -97,11 +103,15 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 		}
 	}
 
-	async function deleteProj(projId: number) {
+	async function deleteProjHandler(projId: number) {
 		if (projects.length > 1) {
 			setActiveProjectId(projects[projects.length - 2].id)
 		}
-		await deleteProject(projId)
+		if (jwtToken) {
+			await deleteProject(projId)
+		} else {
+			dispatch(deleteKanbProject(projId))
+		}
 	}
 
 
@@ -117,8 +127,11 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 				</div>
 			</div>
 			<div className='project-kanban__buttons'>
-				<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProj(project.id)} >Удалить проект</Button>
-				<Button type={ButtonTypes.BG_BLUE} onClick={() => saveProject([project.id, boards])}>Сохранить</Button>
+				<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProjHandler(project.id)} >Удалить проект</Button>
+				<Button type={ButtonTypes.BG_BLUE}
+					onClick={jwtToken
+						? () => saveProject([project.id, boards])
+						: () => dispatch(saveKanbProject({ id: project.id, boards }))}>Сохранить</Button>
 			</div>
 			<Modal visible={modalVisible} setVisible={setModalVisible}>
 				<KanbanItemForm itemDesc={itemDesc} board={boardAdd} itemToUpdate={itemToUpdate} setItemDesc={setItemDesc} typeForm={formType} addItem={addNewItem} updateItem={finishUpdateItem} />

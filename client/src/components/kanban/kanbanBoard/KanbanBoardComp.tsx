@@ -53,8 +53,6 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 		}, 300)
 	}
 
-
-
 	const [anim, setAnim] = useState(false)
 
 	useEffect(() => {
@@ -83,9 +81,7 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 					<KanbanBoardItemComp key={item.id} getItemToUpdate={getItemToUpdate} board={board} boards={boards} setBoards={setBoards} setBoardAdd={setBoardAdd} currentBoard={currentBoard} currentItem={currentItem} item={item} setCurrentBoard={setCurrentBoard} setCurrentItem={setCurrentItem} />
 				)}
 			</div>
-
 		</div >
-
 	)
 }
 

@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { RootState } from '../../store/store'
-import { useSelector, useDispatch } from 'react-redux'
 import './DayPage.scss'
 import { getDateTitle } from '../../utils/getDateTitle'
 import { calendarApi } from '../../services/calendarApi'
 import { IEvent } from '../../types/CalendarTypes'
+import { useAppSelector } from '../../hooks/redux/reduxHooks'
 
 const DayPage = () => {
 	const params = useParams()
 
 	let events: IEvent[] = []
 
+	const eventsRedux = useAppSelector(state => state.events.events.filter(ev => ev.dayId == params.id))
+
 	if (params.id) {
 		const { data } = calendarApi.useGetEventsByIdQuery(params.id)
 		if (data) {
 			events = data
+		} else {
+			events = eventsRedux
 		}
 	}
 
@@ -32,7 +35,7 @@ const DayPage = () => {
 
 	return (
 		<div className='daypage__container'>
-			{date && <h2 className='daypage__title'>{getDateTitle(date.getMonth(), date.getDay(), date.getDate(),)}</h2>}
+			{date && <h2 className='daypage__title'>{getDateTitle(date.getMonth(), date.getDay(), date.getDate())}</h2>}
 			{events.length > 0
 				? events.map((ev, index) => <h3 key={index}>{ev.content}</h3>)
 				: <h3>Событий на этот день нет</h3>

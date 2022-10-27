@@ -1,25 +1,43 @@
-import React, { useState, useEffect, FC, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect, FC, useCallback, useContext, useRef } from 'react'
 import CalendarMonth from '../../components/calendar/CalendarMonth'
 import EventForm from '../../components/calendar/EventForm'
 import Select from '../../components/calendar/SelectMonths'
 import Modal from '../../components/UI/modal/modal'
+import { AuthToken } from '../../context/authContext'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux/reduxHooks'
 import { Day } from '../../models/calendarModels/Day'
 import { Month } from '../../models/calendarModels/Month'
 import { calendarApi } from '../../services/calendarApi'
-// import { eventAdded, RootState } from '../../store/store'
+import { createEventDay } from '../../store/store'
+import { IEvent } from '../../types/CalendarTypes'
 import './CalendarPage.scss'
 
 const CalendarPage: FC = () => {
 	const date: Date = new Date()
+	let events: IEvent[] = []
+
+	const { jwtToken, setJwtToken } = useContext(AuthToken)
+
+	const dispatch = useAppDispatch()
+	const ev = useAppSelector(state => state.events.events)
 
 	const [createEvent] = calendarApi.useAddEventMutation()
-	const { data: events } = calendarApi.useGetEventsQuery('')
-	
+	const { data } = calendarApi.useGetEventsQuery('')
+
+	if (jwtToken && data) {
+		events = data
+	} else {
+		events = ev
+	}
 
 	async function addEvent(day: Day, value: string) {
 		if (day) {
-			await createEvent({ content: value, dayId: day.id })
+			const newEv = { content: value, dayId: day.id, id: Date.now() }
+			if (jwtToken) {
+				await createEvent(newEv)
+			} else {
+				dispatch(createEventDay(newEv))
+			}
 		}
 	}
 
@@ -78,7 +96,7 @@ const CalendarPage: FC = () => {
 			</div>
 			<CalendarMonth days={calendar.days} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
 			<Modal visible={eventModal} setVisible={setEventModal}>
-				<EventForm value={eventDesc} visible={setEventModal} onChange={setEventDesc} addedDay={addedDay} addEvent={addEvent} />
+				<EventForm onChange={setEventDesc} value={eventDesc} visible={setEventModal} addedDay={addedDay} addEvent={addEvent} />
 			</Modal>
 		</div >
 	)

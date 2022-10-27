@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, forwardRef, RefObject, } from 'react'
 import { Day } from '../../models/calendarModels/Day';
 
 interface EventFormProps {
 	value: string;
+	onChange: (x: string) => void;
 	addedDay: Day | undefined;
 	visible: (visible: boolean) => void
-	onChange: (value: string) => void
 	addEvent: (day: Day, value: string) => void
 }
 
@@ -17,8 +17,8 @@ const EventForm: FC<EventFormProps> = ({ visible, addedDay, value, onChange, add
 		if (addedDay) {
 			addEvent(addedDay, value)
 		}
-		onChange('')
 	}
+
 	return (
 		<form>
 			<input type="text" value={value} onChange={e => onChange(e.target.value)} />

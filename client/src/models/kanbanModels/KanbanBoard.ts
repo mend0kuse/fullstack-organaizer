@@ -13,13 +13,9 @@ export default class KanbanBoard {
 		this.name = name;
 		this.headBg = headBg;
 	}
-
-
 }
 
 export class KanbanBoardLogic {
-
-
 	deleteItem(board: KanbanBoard, i: KanbanBoardItem) {
 		let asd = board.items.filter(item => item.id !== i.id)
 		board.items = asd
@@ -36,10 +32,6 @@ export class KanbanBoardLogic {
 
 		board.items = asd
 	}
-
-	// update() {
-	// 	return this.items
-	// }
 
 	dropCardHandler(e: React.DragEvent<HTMLDivElement>, board: KanbanBoard, currentBoard: KanbanBoard | null, currentItem: KanbanBoardItem | null, boards: KanbanBoard[], setBoards: (arr: KanbanBoard[]) => void) {
 		const arraytId = board.items.map(item => item.id)
@@ -60,6 +52,7 @@ export class KanbanBoardLogic {
 			}
 		}
 	}
+	
 	dragOverHandler(e: React.DragEvent<HTMLDivElement>) {
 		e.preventDefault()
 	}
