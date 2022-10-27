@@ -19,6 +19,9 @@
 	margin-top: 70px;
 	margin-left: 25px;
 	list-style-type: none;
+	display: flex;
+	flex-direction: column;
+	row-gap: 5px;
 
 	&__link {
 		display: flex;
@@ -27,6 +30,15 @@
 		color: black;
 		&::before {
 			font-size: 25px;
+		}
+	}
+	&__profile {
+		column-gap: 5px;
+		display: flex;
+		img {
+			width: 25px;
+			height: 25px;
+			border-radius: 50%;
 		}
 	}
 }

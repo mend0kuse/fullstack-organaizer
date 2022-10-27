@@ -9,12 +9,9 @@ import { routerAuth } from './routers/AuthRouter.js'
 import { routerKanban } from './routers/kanbanRouter.js';
 import { routerCalendar } from './routers/calendarRouter.js';
 import { lkRouter } from './routers/lkRouter.js';
+import { corsOptions } from './config.js';
 
-const corsOptions = {
-	origin: '*',
-	credentials: true,
-	optionSuccessStatus: 200,
-}
+
 
 const app = express()
 const __dirname = path.resolve()

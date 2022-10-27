@@ -43,15 +43,6 @@ class AuthConroller {
 			res.status(400).json({ message: 'Login Error' })
 		}
 	}
-	async userInfo(req, res) {
-
-		const userId = req.user.id
-
-		const findedUser = await User.findOne({ _id: userId })
-
-		res.status(200).send(findedUser)
-
-	}
 }
 
 export default new AuthConroller()

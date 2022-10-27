@@ -9,29 +9,16 @@ import './Lk.scss'
 const Lk = () => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
-
 	const { data, isSuccess, isError } = authService.useUserInfoQuery(jwtToken)
-
-	const [imgSrc, setImgSrc] = useState('')
-
 
 	const [sendAvatar, info] = authService.useSendAvatarMutation()
 
 	const [uploadFile, setUploadFile] = useState<FileList | null>(null);
 
-	useEffect(() => {
-		if (data?.avatar) {
-			setImgSrc(data.avatar)
-		}
-	}, [data])
-
-
-
 
 	const uploadAvatar = async () => {
 		let formData = new FormData()
 		if (uploadFile) {
-
 			if (data?._id) {
 				formData.append('file', uploadFile[0], `${data._id}_avatar.png`)
 				formData.append('_id', data._id)
@@ -48,13 +35,12 @@ const Lk = () => {
 			{isSuccess &&
 				<form className='lk__profile'>
 					<h1>ПРивет {data.username}</h1>
-					{isSuccess && data.avatar
-						? <img src={'http://localhost:5000/images/' + imgSrc} className='avatar' alt="sdf" />
+					{data.avatar
+						? <img src={'http://localhost:5000/images/' + data.avatar} className='avatar' alt="sdf" />
 
 						: <img src={anon} className='avatar' alt=''></img>
 					}
-					<input type="file"
-						onChange={(e) => setUploadFile(e.target.files)} />
+					<input type="file" onChange={(e) => setUploadFile(e.target.files)} />
 					<button onClick={e => {
 						e.preventDefault()
 						uploadAvatar()
