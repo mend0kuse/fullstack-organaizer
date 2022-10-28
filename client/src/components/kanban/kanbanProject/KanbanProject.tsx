@@ -27,7 +27,6 @@ interface KanbanProps {
 const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
-
 	const dispatch = useAppDispatch()
 
 	const [deleteProject] = kanbanApi.useDeleteProjectMutation() //запрос на удаление с бд
@@ -68,15 +67,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 	function addNewItem(board: KanbanBoard) {
 		const newItem = new KanbanBoardItem(Date.now(), itemDesc, false)
-
 		board.items.push(newItem)
-		setBoards(boards.map(b => {
-			if (b.id == board.id) {
-				return board
-			}
-			return b
-		}))
-
 		setModalVisible(false)
 		setItemDesc({ title: '', description: '', direction: '' })
 	}
@@ -84,6 +75,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 	function getItemToUpdate(item: KanbanTask) {
 		setItemDesc({ title: item.info.title, description: item.info.description, direction: item.info.direction })
 		setItemToUpdate(item)
+
 		setFormType(FormsTypes.UPDATe)
 		setModalVisible(true)
 	}
@@ -107,11 +99,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 		if (projects.length > 1) {
 			setActiveProjectId(projects[projects.length - 2].id)
 		}
-		if (jwtToken) {
-			await deleteProject(projId)
-		} else {
-			dispatch(deleteKanbProject(projId))
-		}
+		jwtToken ? await deleteProject(projId) : dispatch(deleteKanbProject(projId))
 	}
 
 
@@ -133,6 +121,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 						? () => saveProject([project.id, boards])
 						: () => dispatch(saveKanbProject({ id: project.id, boards }))}>Сохранить</Button>
 			</div>
+
 			<Modal visible={modalVisible} setVisible={setModalVisible}>
 				<KanbanItemForm itemDesc={itemDesc} board={boardAdd} itemToUpdate={itemToUpdate} setItemDesc={setItemDesc} typeForm={formType} addItem={addNewItem} updateItem={finishUpdateItem} />
 			</Modal>

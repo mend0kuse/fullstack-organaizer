@@ -1,27 +1,27 @@
-import React, { FC, forwardRef, RefObject, } from 'react'
+import React, { FC, forwardRef, RefObject, useRef, } from 'react'
 import { Day } from '../../models/calendarModels/Day';
 
 interface EventFormProps {
-	value: string;
-	onChange: (x: string) => void;
 	addedDay: Day | undefined;
 	visible: (visible: boolean) => void
 	addEvent: (day: Day, value: string) => void
 }
 
 
-const EventForm: FC<EventFormProps> = ({ visible, addedDay, value, onChange, addEvent }) => {
+const EventForm: FC<EventFormProps> = ({ visible, addedDay, addEvent }) => {
+	const eventName = useRef<HTMLInputElement>(null)
+	
 	function submitEvent(e: React.FormEvent) {
 		e.preventDefault()
 		visible(false)
-		if (addedDay) {
-			addEvent(addedDay, value)
+		if (addedDay && eventName.current) {
+			addEvent(addedDay, eventName.current?.value)
 		}
 	}
 
 	return (
 		<form>
-			<input type="text" value={value} onChange={e => onChange(e.target.value)} />
+			<input type="text" ref={eventName} />
 			<button onClick={submitEvent}>Добавить</button>
 		</form>
 	)

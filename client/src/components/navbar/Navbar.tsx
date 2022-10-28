@@ -15,10 +15,8 @@ interface NavbarProps {
 }
 
 const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
-
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 	const { data: profile } = authService.useUserInfoQuery(jwtToken)
-
 
 	return (
 		<nav className={navbarOpen ? 'navbar show' : 'navbar'}>
@@ -43,7 +41,6 @@ const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
 				<li className='list-navbar__item'>
 					<Link className='list-navbar__link _icon-Document' to='/kanban'>Канбан</Link>
 				</li>
-
 				<li className='list-navbar__item'>
 					{jwtToken
 						? <Button type={ButtonTypes.BG_NONE} className='list-navbar__link' onClick={e => setJwtToken('')}>Выход</Button>

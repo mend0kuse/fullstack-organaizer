@@ -15,39 +15,29 @@ const KanbanProjectsPage: FC = () => {
 	const projects = useAppSelector((state) => state.kanban.projects)
 	const dispatch = useAppDispatch()
 
-	let kanbProjects: KanbanProject[] = []
-
 	const { data, isError } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
 	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта из в базу данных
 
+	const kanbProjects = data ? data.map(i => new KanbanProject(i.id, i.name, i.boards)) : projects.map(i => new KanbanProject(i.id, i.name, i.boards))
+
 	//ЕСЛИ ПОЛЬЗОВАТЕЛЬ АВТОРИЗОВАН,ТО ПРОЕКТЫ С БАЗЫ,ЕСЛИ НЕТ,ТО РАБОТАЕТ С ПРОЕКТАМИ С РЕДАКСА
-	if (jwtToken && data) {
-		kanbProjects = data.map(i => {
-			return new KanbanProject(i.id, i.name, i.boards)
-		})
-	} else {
-		kanbProjects = projects.map(i => {
-			return new KanbanProject(i.id, i.name, i.boards)
-		})
-	}
 
 	const [activeProjectId, setActiveProjectId] = useState<number>() //id открытого проекта
 	const [nameProject, setNameProject] = useState('') // название проекта
 	const [nameInp, setNameInp] = useState(false) //видимость поля ввода имени проекта
 
-	const addProject = useCallback(
-		async () => {
-			if (nameProject.length !== 0) {
-				const newProj = new KanbanProject(Date.now(), nameProject, [])
-				if (jwtToken) {
-					await createProj(newProj)
-				} else {
-					dispatch(addKanbProject(newProj))
-				}
-				setActiveProjectId(newProj.id)
-				hideField()
+	const addProject = async () => {
+		if (nameProject.length !== 0) {
+			const newProj = new KanbanProject(Date.now(), nameProject, [])
+			if (jwtToken) {
+				await createProj(newProj)
+			} else {
+				dispatch(addKanbProject(newProj))
 			}
-		}, [nameProject, jwtToken])
+			setActiveProjectId(newProj.id)
+			hideField()
+		}
+	}
 
 
 	function hideField() {

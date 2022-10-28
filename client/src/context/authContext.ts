@@ -7,5 +7,3 @@ export interface TokenContext {
 }
 
 export const AuthToken = React.createContext({} as TokenContext);
-
-export const User = createContext(null)

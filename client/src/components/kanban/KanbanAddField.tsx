@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { CSSTransition } from 'react-transition-group';
 
 import Input from '../UI/input/Input';
@@ -20,7 +20,7 @@ const KanbanAddField: FC<AddFieldProps> = ({ className, value, setValue, fn }) =
 	return (
 		<CSSTransition mountOnEnter unmountOnExit in={anim} timeout={500} classNames={className}>
 			<div className={className}>
-				<Input value={value} placeholder='Введите название' onChange={e => setValue(e.target.value)} type="text" />
+				<Input placeholder='Введите название' value={value} onChange={e => setValue(e.target.value)} type="text" />
 				<button className='_icon-mark' onClick={e => {
 					if (value.length !== 0) {
 						setAnim(!anim)

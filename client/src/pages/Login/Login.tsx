@@ -26,10 +26,7 @@ const Login = () => {
 		<form className='log-form' >
 			<input type="text" value={loginData.username} onChange={e => setLoginData({ ...loginData, username: e.target.value })} />
 			<input type="password" value={loginData.password} onChange={e => setLoginData({ ...loginData, password: e.target.value })} />
-			<button onClick={e => {
-				e.preventDefault()
-				log()
-			}}>Войти</button>
+			<button onClick={e => { e.preventDefault(); log() }}>Войти</button>
 		</form>
 	)
 }

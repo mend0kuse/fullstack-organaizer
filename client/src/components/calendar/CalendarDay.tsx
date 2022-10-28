@@ -12,11 +12,10 @@ interface CalendarDayProps {
 const CalendarDay: FC<CalendarDayProps> = ({ day, setAddedDay, setEventModal }) => {
 	const router = useNavigate()
 
-	const openEventModal = useCallback(
-		() => {
-			setAddedDay(day)
-			setEventModal(true)
-		}, [setAddedDay, setEventModal, day])
+	const openEventModal = () => {
+		setAddedDay(day)
+		setEventModal(true)
+	}
 
 
 	return (
@@ -28,7 +27,6 @@ const CalendarDay: FC<CalendarDayProps> = ({ day, setAddedDay, setEventModal }) 
 					<button className='day-calendar__open _icon-open' onClick={() => router(`/calendar/${day.id}`)}></button>
 				</>
 			}
-
 			{day.number && day.events.length > 0 &&
 				<div className='day-calendar__events events-calendar'>
 					{day.events.map(ev => {

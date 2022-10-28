@@ -7,6 +7,7 @@ import './Registration.scss'
 
 const Registration = () => {
 	const pagesRouter = useNavigate()
+	
 	const username = useInput('', { isEmpty: true })
 	const password = useInput('', { isEmpty: true, isPass: /^(?=.*[0-9])(?=.*[!@#+$%^&*])[a-zA-Z0-9!@#+$%^&*]{6,16}$/ })
 
@@ -22,11 +23,7 @@ const Registration = () => {
 	}
 
 	useEffect(() => {
-		if (username.err || password.err) {
-			setFormValid(false)
-		} else {
-			setFormValid(true)
-		}
+		username.err || password.err ? setFormValid(false) : setFormValid(true)
 	}, [username.err, password.err])
 
 
@@ -40,10 +37,7 @@ const Registration = () => {
 			{(password.isDirty && password.err) && <div style={{ color: "red" }}>{password.err}</div>}
 			<input value={password.value} onChange={e => password.onChange(e)} onBlur={e => password.onBlur(e)} placeholder='Введите пароль' type='password' name='password' />
 
-			<button type='submit' disabled={!formValid} onClick={e => {
-				e.preventDefault()
-				register()
-			}}>Регистрация</button>
+			<button type='submit' disabled={!formValid} onClick={e => { e.preventDefault(); register() }}>Регистрация</button>
 		</form>
 	)
 }

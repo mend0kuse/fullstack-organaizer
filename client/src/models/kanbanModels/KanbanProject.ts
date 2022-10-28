@@ -11,3 +11,4 @@ export default class KanbanProject {
 		this.name = name
 	}
 }
+

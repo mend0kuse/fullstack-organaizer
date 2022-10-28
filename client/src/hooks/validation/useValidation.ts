@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react"
 
-export const useValidation = (value, validations) => {
+export interface ValidationTypes {
+	isEmail?: RegExp
+	isEmpty?: boolean,
+	isPass?: RegExp
+}
+
+export const useValidation = (value: string, validations: ValidationTypes) => {
 	const [isEmpty, setEmpty] = useState(true)
 	const [err, setErr] = useState('')
 
@@ -14,26 +20,16 @@ export const useValidation = (value, validations) => {
 					} else {
 						setEmpty(true)
 						setErr('Поле не может быть пустым')
-						return
 					}
 					break;
 				case 'isEmail':
-					if (!validations[validation].test(String(value).toLowerCase())) {
-						setErr('Email неккоректен')
-					} else {
-						setErr('')
-					}
+					!validations[validation]?.test(String(value).toLowerCase()) ? setErr('Email неккоректен') : setErr('')
 					break;
 				case 'isPass':
-					if (!validations[validation].test(String(value).toLowerCase())) {
-						setErr('Пароль неккоректен')
-					} else {
-						setErr('')
-					}
+					!validations[validation]?.test(String(value).toLowerCase()) ? setErr('Пароль неккоректен') : setErr('')
 					break;
 			}
 		}
-
 	}, [value])
 
 	return { isEmpty, err }

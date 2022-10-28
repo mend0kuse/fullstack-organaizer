@@ -43,5 +43,6 @@ export class KanbanTaskLogic {
 
 	pin(item: KanbanTask) {
 		item.pinned = item.pinned ? false : true
+		return item.pinned
 	}
 }

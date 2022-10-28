@@ -11,10 +11,10 @@ import { calendarApi } from '../../services/calendarApi'
 import { createEventDay } from '../../store/store'
 import { IEvent } from '../../types/CalendarTypes'
 import './CalendarPage.scss'
+import MonthNavigation from './MonthNavigation'
 
 const CalendarPage: FC = () => {
-	const date: Date = new Date()
-	let events: IEvent[] = []
+	const date: Date = new Date() //текущая дата
 
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
@@ -24,39 +24,22 @@ const CalendarPage: FC = () => {
 	const [createEvent] = calendarApi.useAddEventMutation()
 	const { data } = calendarApi.useGetEventsQuery('')
 
-	if (jwtToken && data) {
-		events = data
-	} else {
-		events = ev
-	}
+	const events = (jwtToken && data) ? data : ev //если авторизован то данные с базы
 
 	async function addEvent(day: Day, value: string) {
 		if (day) {
 			const newEv = { content: value, dayId: day.id, id: Date.now() }
-			if (jwtToken) {
-				await createEvent(newEv)
-			} else {
-				dispatch(createEventDay(newEv))
-			}
+			jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
 		}
 	}
 
 	const [dateShow, setDateShow] = useState({ month: date.getMonth(), year: date.getFullYear() }) //получение текущего месяца и года
-
 	const [calendar, setCalendar] = useState<Month>(new Month(dateShow.year, dateShow.month))
 
 	const [eventModal, setEventModal] = useState(false)
-	const [eventDesc, setEventDesc] = useState('')
-	const [addedDay, setAddedDay] = useState<Day>()
+	const [addedDay, setAddedDay] = useState<Day>() //стейт для дня в который будет добовляться событие
 
-
-	const changeSelect = useCallback(
-		(event: React.ChangeEvent<HTMLSelectElement>) => {
-			const val = +event.target.value;
-			setDateShow({ ...dateShow, month: val })
-		}
-		, [setDateShow, dateShow])
-
+	//переключение месяца при кликах на стрелки или смена селекта
 	useEffect(() => {
 		const newCalendar = new Month(dateShow.year, dateShow.month)
 		newCalendar.draw()
@@ -64,39 +47,13 @@ const CalendarPage: FC = () => {
 
 	}, [dateShow.month, dateShow.year])
 
-	const nextMonth = useCallback(
-		() => {
-			if (dateShow.month == 11) {
-				setDateShow({ year: dateShow.year + 1, month: 0 })
-			}
-			else {
-				setDateShow({ ...dateShow, month: dateShow.month + 1 })
-			}
-		}, [setDateShow, dateShow])
-
-	const prevMonth = useCallback(
-		() => {
-			if (dateShow.month == 0) {
-				setDateShow({ year: dateShow.year - 1, month: 11 })
-			}
-			else {
-				setDateShow({ ...dateShow, month: dateShow.month - 1 })
-			}
-		}, [setDateShow, dateShow])
 
 	return (
 		<div className='calendar__container'>
-			<div className="calendar__navigation navigation-calendar">
-				<button onClick={prevMonth} className='navigation-calendar__btn navigation-calendar-prev _icon-arrow'></button>
-				<div className="navigation-calendar__filter">
-					<Select value={dateShow.month} onChange={changeSelect} />
-					<input type="number" value={dateShow.year} onChange={e => setDateShow({ ...dateShow, year: +e.target.value })} />
-				</div>
-				<button onClick={nextMonth} className='navigation-calendar__btn navigation-calendar-next _icon-arrow'></button>
-			</div>
+			<MonthNavigation dateShow={dateShow} setDateShow={setDateShow} />
 			<CalendarMonth days={calendar.days} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
 			<Modal visible={eventModal} setVisible={setEventModal}>
-				<EventForm onChange={setEventDesc} value={eventDesc} visible={setEventModal} addedDay={addedDay} addEvent={addEvent} />
+				<EventForm visible={setEventModal} addedDay={addedDay} addEvent={addEvent} />
 			</Modal>
 		</div >
 	)

@@ -10,16 +10,11 @@ const DayPage = () => {
 	const params = useParams()
 
 	let events: IEvent[] = []
-
 	const eventsRedux = useAppSelector(state => state.events.events.filter(ev => ev.dayId == params.id))
 
 	if (params.id) {
 		const { data } = calendarApi.useGetEventsByIdQuery(params.id)
-		if (data) {
-			events = data
-		} else {
-			events = eventsRedux
-		}
+		events = data ? data : eventsRedux
 	}
 
 	let asd = params.id?.split('_');
@@ -40,7 +35,6 @@ const DayPage = () => {
 				? events.map((ev, index) => <h3 key={index}>{ev.content}</h3>)
 				: <h3>Событий на этот день нет</h3>
 			}
-			<button></button>
 		</div>
 	)
 }
