@@ -5,14 +5,14 @@ import { authService } from '../../services/authService'
 import anon from '../../img/Anon1.jpg'
 
 import './Lk.scss'
+import Button from '../../components/UI/button/Button'
+import { ButtonTypes } from '../../types/KanbanTypes'
 
 const Lk = () => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
-
 	const { data, isSuccess, isError } = authService.useUserInfoQuery(jwtToken)
 
 	const [sendAvatar, info] = authService.useSendAvatarMutation()
-
 	const [uploadFile, setUploadFile] = useState<FileList | null>(null);
 
 
@@ -23,7 +23,6 @@ const Lk = () => {
 				formData.append('file', uploadFile[0], `${data._id}_avatar.png`)
 				formData.append('_id', data._id)
 			}
-
 			await sendAvatar(formData)
 		}
 
@@ -37,15 +36,14 @@ const Lk = () => {
 					<h1>ПРивет {data.username}</h1>
 					{data.avatar
 						? <img src={'http://localhost:5000/images/' + data.avatar} className='avatar' alt="sdf" />
-
 						: <img src={anon} className='avatar' alt=''></img>
 					}
 					<input type="file" onChange={(e) => setUploadFile(e.target.files)} />
-					<button onClick={e => {
+					<Button type={ButtonTypes.BG_BLUE} onClick={e => {
 						e.preventDefault()
 						uploadAvatar()
 					}
-					}>Поставить аватар</button>
+					}>Поставить аватар</Button>
 				</form>
 			}
 		</div>

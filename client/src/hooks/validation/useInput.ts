@@ -11,7 +11,7 @@ export const useInput = (initialValue: string, validations: ValidationTypes) => 
 		setValue(e.target.value)
 	}
 
-	const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+	const onBlur = () => {
 		setDirty(true)
 	}
 

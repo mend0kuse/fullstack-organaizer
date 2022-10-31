@@ -30,7 +30,6 @@
   npm install
   cd ..
   npm install
-  npm install -g concurrently
   npm run dev
 ```
 
