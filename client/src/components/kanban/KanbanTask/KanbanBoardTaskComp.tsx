@@ -5,6 +5,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import KanbanTask, { KanbanTaskLogic } from '../../../models/kanbanModels/KanbanTask';
 import TaskInfo from './TaskInfo';
+import TaskButtons from './TaskButtons';
 
 interface BoardTaskProps {
 	item: KanbanTask;
@@ -70,11 +71,7 @@ const KanbanBoardTaskComp: FC<BoardTaskProps> = ({ getItemToUpdate, item, board,
 			>
 				{(hover || pinned) && <button className={pinned ? 'task-board__pin pinned  _icon-Pin' : 'task-board__pin _icon-Pin'} onClick={() => setPinned(itemLogic.pin(item))}></button>}
 				<TaskInfo item={item} />
-				{hover &&
-					<div className="task-board__btns btns-task">
-						<button className='btns-task__edit _icon-edit' onClick={() => getItemToUpdate(item)}></button>
-						<button className='btns-task__delete _icon-Trash' onClick={e => delItem(e)}></button>
-					</div>}
+				{hover && <TaskButtons delItem={delItem} getItemToUpdate={getItemToUpdate} item={item} />}
 			</div>
 		</CSSTransition>
 	)

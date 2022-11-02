@@ -8,6 +8,7 @@ import './KanbanBoard.scss'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { CSSTransition } from 'react-transition-group';
+import KanbanBoardHead from './KanbanBoardHead';
 
 interface BoardProps {
 
@@ -62,15 +63,7 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 	return (
 		<div className='project-kanban__board board-project'>
 			<CSSTransition in={anim} timeout={300} mountOnEnter classNames='head-board'>
-				<div className={`board-project__head head-board ${board.headBg}`} >
-					<button className='head-board__delete _icon-Trash' onClick={() => delDesk(board.id)}></button>
-					<Tippy content={board.name} theme="light" >
-						<h2 className='head-board__name'>
-							<span>{board.name}</span>
-						</h2>
-					</Tippy>
-					<button className='head-board__add' onClick={addItemModalShow}>+</button>
-				</div>
+				<KanbanBoardHead addItemModalShow={addItemModalShow} board={board} delDesk={delDesk} />
 			</CSSTransition>
 			<div
 				key={board.id}

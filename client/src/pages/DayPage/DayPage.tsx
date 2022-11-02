@@ -17,13 +17,13 @@ const DayPage = () => {
 		events = data ? data : eventsRedux
 	}
 
-	let asd = params.id?.split('_');
+	let dayIdString = params.id?.split('_');
 
 	const [date, setDate] = useState<Date>()
 
 	useEffect(() => {
-		if (asd) {
-			setDate(new Date(+asd[2], +asd[1] - 1, +asd[0]))
+		if (dayIdString) {
+			setDate(new Date(+dayIdString[2], +dayIdString[1] - 1, +dayIdString[0]))
 		}
 	}, [])
 

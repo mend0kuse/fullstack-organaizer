@@ -3,7 +3,7 @@ import { Day } from '../../models/calendarModels/Day'
 import './calendar.scss'
 import CalendarWeeksNames from './CalendarWeeksNames'
 
-import CalendarDay from './CalendarDay'
+import CalendarDay from './CalendarDay/CalendarDay'
 import { IEvent } from '../../types/CalendarTypes'
 
 interface CalendarMonthProps {
@@ -14,23 +14,19 @@ interface CalendarMonthProps {
 }
 
 const CalendarMonth: FC<CalendarMonthProps> = ({ days, events, setAddedDay, setEventModal }) => {
-
 	return (
-		<div className='calendar'>
-			<CalendarWeeksNames />
-			<div className="calendar__inner inner-calendar">
-				{days.map((row, index) =>
-					<div key={index} className='inner-calendar__row'>
-						{row.map((day, index) => {
-							if (events) {
-								day.events = events.filter(event => event.dayId == day.id)
-							}
-							return <CalendarDay key={index} day={day} setAddedDay={setAddedDay} setEventModal={setEventModal} />
-						})}
-					</div>
-				)}
-			</div>
-		</div >
+		<div className="calendar__inner inner-calendar">
+			{days.map((row, index) =>
+				<div key={index} className='inner-calendar__row'>
+					{row.map((day, index) => {
+						if (events) {
+							day.events = events.filter(event => event.dayId == day.id)
+						}
+						return <CalendarDay key={index} day={day} setAddedDay={setAddedDay} setEventModal={setEventModal} />
+					})}
+				</div>
+			)}
+		</div>
 	)
 }
 

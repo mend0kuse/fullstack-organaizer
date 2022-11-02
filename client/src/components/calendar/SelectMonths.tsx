@@ -6,9 +6,9 @@ interface SelectProps {
 	value: number
 }
 
-const Select: FC<SelectProps> = ({ onChange, value }) => {
+const MonthsSelect: FC<SelectProps> = ({ onChange, value }) => {
 
-	const monthsSelect = useMemo(() => [
+	const months = useMemo(() => [
 		{ value: 0, name: Months.JAN },
 		{ value: 1, name: Months.FEB },
 		{ value: 2, name: Months.MARCH },
@@ -25,11 +25,11 @@ const Select: FC<SelectProps> = ({ onChange, value }) => {
 
 	return (
 		<select value={value} onChange={e => onChange(e)}>
-			{monthsSelect.map((item) => {
+			{months.map((item) => {
 				return <option key={item.value} value={item.value}>{item.name}</option>
 			})}
 		</select>
 	)
 }
 
-export default Select
+export default MonthsSelect

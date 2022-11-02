@@ -18,8 +18,7 @@ function App() {
         <Header />
         <AppRouter />
       </BrowserRouter>
-    </AuthToken.Provider>
-
+    </AuthToken.Provider> 
   );
 }
 
