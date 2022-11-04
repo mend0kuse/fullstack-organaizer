@@ -1,5 +1,5 @@
-import React, { useState, useEffect, FC, useContext, } from 'react'
-import CalendarMonth from '../../components/calendar/CalendarMonth'
+import React, { useState, useEffect, FC, useContext, memo, } from 'react'
+import CalendarMonth from '../../components/calendar/CalendarMonth/CalendarMonth'
 import CalendarWeeksNames from '../../components/calendar/CalendarWeeksNames'
 import EventForm from '../../components/calendar/EventForm'
 import Modal from '../../components/UI/modal/modal'
@@ -10,9 +10,9 @@ import { Month } from '../../models/calendarModels/Month'
 import { calendarApi } from '../../services/calendarApi'
 import { createEventDay } from '../../store/store'
 import './CalendarPage.scss'
-import MonthNavigation from './MonthNavigation'
+import MonthNavigation from '../../components/calendar/CalendarNavigation/MonthNavigation'
 
-const CalendarPage: FC = () => {
+const CalendarPage: FC = memo(() => {
 	const date: Date = new Date() //текущая дата
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
@@ -27,7 +27,7 @@ const CalendarPage: FC = () => {
 	//события для дней
 	const events = (jwtToken && data) ? data : ev //если авторизован то данные с базы
 
-	const [dateShow, setDateShow] = useState({ month: date.getMonth(), year: date.getFullYear() }) //получение текущего месяца и года
+	const [dateShow, setDateShow] = useState({ month: date.getMonth(), year: date.getFullYear()}) //получение текущего месяца и года
 	const [calendar, setCalendar] = useState<Month>(new Month(dateShow.year, dateShow.month))
 
 	const [eventModal, setEventModal] = useState(false)
@@ -53,7 +53,7 @@ const CalendarPage: FC = () => {
 				<MonthNavigation dateShow={dateShow} setDateShow={setDateShow} />
 				<div className="calendar">
 					<CalendarWeeksNames />
-					<CalendarMonth days={calendar.days} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
+					<CalendarMonth days={calendar.days} dateShow={dateShow} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
 				</div>
 			</div >
 			<Modal visible={eventModal} setVisible={setEventModal}>
@@ -61,6 +61,6 @@ const CalendarPage: FC = () => {
 			</Modal>
 		</>
 	)
-}
+})
 
 export default CalendarPage

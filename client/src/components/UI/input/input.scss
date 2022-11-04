@@ -24,7 +24,7 @@
 		pointer-events: none;
 		left: 0;
 		top: 15px;
-		transition: 0.2s ease all;
+		transition: 0.2s linear all;
 	}
 
 	&__text:focus ~ &__label,
@@ -33,6 +33,15 @@
 		left: 0;
 		font-size: 11px;
 		opacity: 1;
-		color: $darkBlue;
+		color: black;
 	}
+}
+
+.inp-up.black .inp-up__text {
+	color: black;
+	border-color: black;
+}
+.inp-up.black .inp-up__label {
+	color: black;
+	border-color: black;
 }

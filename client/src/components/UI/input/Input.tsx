@@ -7,8 +7,8 @@ interface InputProps {
 }
 
 const Input: FC<InputProps> = ({ ...props }) => {
-
 	const rootClass = ['my-inp']
+	
 	if (props.className) {
 		rootClass.push(props.className)
 	}

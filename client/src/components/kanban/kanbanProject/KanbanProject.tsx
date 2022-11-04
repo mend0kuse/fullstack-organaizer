@@ -57,7 +57,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 	function getColor() {
 		setColorNumber(prev => prev + 1)
-		if (colorNumber == 2) {
+		if (colorNumber === 2) {
 			setColorNumber(0)
 		}
 		const color = BoardHeadColors[colorNumber]

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import './modal.scss'
 
 interface ModalProps {
@@ -7,7 +7,7 @@ interface ModalProps {
 	setVisible: (visible: boolean) => void
 }
 
-const Modal: FC<ModalProps> = ({ children, visible, setVisible }) => {
+const Modal: FC<ModalProps> = memo(({ children, visible, setVisible }) => {
 	let rootClass = ['modal']
 	if (visible) {
 		rootClass.push('active')
@@ -20,6 +20,6 @@ const Modal: FC<ModalProps> = ({ children, visible, setVisible }) => {
 			</div>
 		</div >
 	)
-}
+})
 
 export default Modal

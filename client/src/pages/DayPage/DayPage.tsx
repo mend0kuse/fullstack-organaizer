@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import './DayPage.scss'
 import { getDateTitle } from '../../utils/getDateTitle'
@@ -6,11 +6,11 @@ import { calendarApi } from '../../services/calendarApi'
 import { IEvent } from '../../types/CalendarTypes'
 import { useAppSelector } from '../../hooks/redux/reduxHooks'
 
-const DayPage = () => {
+const DayPage = memo(() => {
 	const params = useParams()
 
 	let events: IEvent[] = []
-	const eventsRedux = useAppSelector(state => state.events.events.filter(ev => ev.dayId == params.id))
+	const eventsRedux = useAppSelector(state => state.events.events.filter(ev => ev.dayId === params.id))
 
 	if (params.id) {
 		const { data } = calendarApi.useGetEventsByIdQuery(params.id)
@@ -37,6 +37,6 @@ const DayPage = () => {
 			}
 		</div>
 	)
-}
+})
 
 export default DayPage
