@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react'
-import Navbar from '../navbar/Navbar'
+import Navbar from './navbar/Navbar'
 import './header.scss'
 
 const Header: FC = () => {
 	const [navbarOpen, setNavbarOpen] = useState(false)
-	
+
 	return (
 		<header className='header'>
 			<div onClick={e => setNavbarOpen(!navbarOpen)} className={navbarOpen ? 'hamburger open ' : 'hamburger'}>

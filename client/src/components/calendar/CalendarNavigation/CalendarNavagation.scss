@@ -1,0 +1,33 @@
+.navigation-calendar {
+	display: flex;
+	column-gap: 100px;
+	align-items: center;
+	&__filter {
+		display: flex;
+		align-items: center;
+	}
+	&__btn {
+		background: none;
+		&::before {
+			font-size: 40px;
+			transition: 0.2s linear all;
+			color: rgba(255, 255, 255, 0.5);
+		}
+		&:hover {
+			&::before {
+				color: white;
+			}
+		}
+	}
+	&-next {
+		transform: rotate(-180deg);
+		margin-bottom: 10px;
+	}
+}
+.filter-navigation {
+	&__year {
+		padding: 5px 10px;
+		border-radius: 8px;
+		max-width: 100px;
+	}
+}

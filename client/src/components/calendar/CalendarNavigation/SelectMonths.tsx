@@ -3,15 +3,15 @@ import Select from '../../UI/select/Select';
 import { DateShowInterface, Months } from '../../../types/CalendarTypes'
 
 interface MonthsSelectProps {
+	className: string
 	setDateShow: (dateShow: DateShowInterface) => void;
 	dateShow: DateShowInterface
 }
 
-const MonthsSelect: FC<MonthsSelectProps> = memo(({ dateShow, setDateShow }) => {
+const MonthsSelect: FC<MonthsSelectProps> = memo(({ dateShow, setDateShow, className }) => {
 
-	const changeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		const val = +event.target.value;
-		setDateShow({ ...dateShow, month: val })
+	const changeSelect = (value: number) => {
+		setDateShow({ ...dateShow, month: value })
 	}
 
 	const months = useMemo(() => [
@@ -30,7 +30,7 @@ const MonthsSelect: FC<MonthsSelectProps> = memo(({ dateShow, setDateShow }) => 
 	], [])
 
 	return (
-		<Select options={months} onChange={changeSelect} value={dateShow.month} />
+		<Select className={className} options={months} onChange={changeSelect} value={months[dateShow.month].name} />
 	)
 })
 
