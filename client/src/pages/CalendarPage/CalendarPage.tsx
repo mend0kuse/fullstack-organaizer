@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, useContext, memo, } from 'react'
+import React, { useState, useEffect, FC, useContext, memo, useCallback, } from 'react'
 import CalendarMonth from '../../components/calendar/CalendarMonth/CalendarMonth'
 import CalendarWeeksNames from '../../components/calendar/CalendarWeeksNames'
 import EventForm from '../../components/calendar/EventForm'
@@ -27,19 +27,19 @@ const CalendarPage: FC = memo(() => {
 	//события для дней
 	const events = (jwtToken && data) ? data : ev //если авторизован то данные с базы
 
-	const [dateShow, setDateShow] = useState({ month: date.getMonth(), year: date.getFullYear()}) //получение текущего месяца и года
+	const [dateShow, setDateShow] = useState({ month: date.getMonth(), year: date.getFullYear() }) //получение текущего месяца и года
 	const [calendar, setCalendar] = useState<Month>(new Month(dateShow.year, dateShow.month))
 
 	const [eventModal, setEventModal] = useState(false)
 	const [addedDay, setAddedDay] = useState<Day>() //стейт для дня в который будет добовляться событие
 
-
-	async function addEvent(day: Day, newEventContent: string) {
-		if (day) {
-			const newEv = { content: newEventContent, dayId: day.id, id: Date.now() }
-			jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
-		}
-	}
+	const addEvent = useCallback(
+		async (day: Day, newEventContent: string) => {
+			if (day) {
+				const newEv = { content: newEventContent, dayId: day.id, id: Date.now() }
+				jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
+			}
+		}, [jwtToken])
 
 	//переключение месяца при кликах на стрелки или смене селекта
 	useEffect(() => {
@@ -48,18 +48,16 @@ const CalendarPage: FC = memo(() => {
 
 
 	return (
-		<>
-			<div className='calendar__container'>
-				<MonthNavigation dateShow={dateShow} setDateShow={setDateShow} />
-				<div className="calendar">
-					<CalendarWeeksNames />
-					<CalendarMonth days={calendar.days} dateShow={dateShow} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
-				</div>
-			</div >
+		<div className='calendar__container'>
+			<MonthNavigation dateShow={dateShow} setDateShow={setDateShow} />
+			<div className="calendar">
+				<CalendarWeeksNames />
+				<CalendarMonth days={calendar.days} dateShow={dateShow} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
+			</div>
 			<Modal visible={eventModal} setVisible={setEventModal}>
 				<EventForm visible={setEventModal} addedDay={addedDay} addEvent={addEvent} />
 			</Modal>
-		</>
+		</div >
 	)
 })
 

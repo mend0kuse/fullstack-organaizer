@@ -2,15 +2,15 @@
 	position: relative;
 }
 .dropdown__select {
+	padding: 5px 10px;
 	background-color: white;
 	cursor: pointer;
 	color: black;
-	padding: 5px 10px;
 	border-radius: 8px;
 }
 .select-dropdown {
 	display: flex;
-	column-gap: 10px;
+	justify-content: space-between;
 	align-items: center;
 	&__arrow {
 		transition: 0.1s linear all;
@@ -26,7 +26,7 @@
 	visibility: hidden;
 	transform-origin: top;
 	transition: 0.2s linear all;
-	top: 100%;
+	top: 105%;
 	position: absolute;
 	cursor: pointer;
 	z-index: 100000;

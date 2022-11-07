@@ -1,16 +1,16 @@
-import React, { FC, useState } from 'react'
+import React, { FC, memo, useState } from 'react'
 import KanbanAddField from '../../components/kanban/KanbanAddField';
 import KanbanProject from '../../models/kanbanModels/KanbanProject'
 
 interface KanbanProjectsTabsProps {
 	kanbProjects: KanbanProject[];
 	addProject: (nameProject: string) => void
-	
+
 	activeProjectId: number | null;
 	setActiveProjectId: (id: number) => void
 }
 
-const KanbanProjectsTabs: FC<KanbanProjectsTabsProps> = ({ addProject, kanbProjects, activeProjectId, setActiveProjectId }) => {
+const KanbanProjectsTabs: FC<KanbanProjectsTabsProps> = memo(({ addProject, kanbProjects, activeProjectId, setActiveProjectId }) => {
 	const [nameProject, setNameProject] = useState('')
 	const [nameInpVisible, setNameInpVisible] = useState(false)
 
@@ -34,6 +34,6 @@ const KanbanProjectsTabs: FC<KanbanProjectsTabsProps> = ({ addProject, kanbProje
 			</div>
 		</div>
 	)
-}
+})
 
 export default KanbanProjectsTabs

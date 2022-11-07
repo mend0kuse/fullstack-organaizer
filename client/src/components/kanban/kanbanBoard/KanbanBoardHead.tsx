@@ -1,5 +1,5 @@
 import Tippy from '@tippyjs/react'
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import KanbanBoard from '../../../models/kanbanModels/KanbanBoard'
 
 interface KanbanBoardHeadProps {
@@ -8,7 +8,7 @@ interface KanbanBoardHeadProps {
 	delDesk: (id: number) => void
 }
 
-const KanbanBoardHead: FC<KanbanBoardHeadProps> = ({ board, addItemModalShow, delDesk }) => {
+const KanbanBoardHead: FC<KanbanBoardHeadProps> = memo(({ board, addItemModalShow, delDesk }) => {
 
 	return (
 		<div className={`board-project__head head-board ${board.headBg}`} >
@@ -21,6 +21,6 @@ const KanbanBoardHead: FC<KanbanBoardHeadProps> = ({ board, addItemModalShow, de
 			<button className='head-board__add' onClick={addItemModalShow}>+</button>
 		</div>
 	)
-}
+})
 
 export default KanbanBoardHead

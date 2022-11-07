@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react'
+import React, { FC, memo, useState } from 'react'
 import Navbar from './navbar/Navbar'
 import './header.scss'
 
-const Header: FC = () => {
+const Header: FC = memo(() => {
 	const [navbarOpen, setNavbarOpen] = useState(false)
 
 	return (
@@ -16,6 +16,6 @@ const Header: FC = () => {
 			<Navbar navbarOpen={navbarOpen} />
 		</header>
 	)
-}
+})
 
 export default Header

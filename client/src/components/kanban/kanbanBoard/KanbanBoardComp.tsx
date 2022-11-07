@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, memo, useEffect, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard'
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -35,7 +35,7 @@ interface BoardProps {
 
 }
 
-const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, setFormType, setBoardAdd, itemDesc, setItemDesc, board, project, setCurrentBoard, setCurrentItem, currentBoard, boards, currentItem, setBoards }) => {
+const KanbanBoardComp: FC<BoardProps> = memo(({ getItemToUpdate, setModalVisible, setFormType, setBoardAdd, itemDesc, setItemDesc, board, project, setCurrentBoard, setCurrentItem, currentBoard, boards, currentItem, setBoards }) => {
 
 	const boardLogic = new KanbanBoardLogic()
 
@@ -76,6 +76,6 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 			</div>
 		</div >
 	)
-}
+})
 
 export default KanbanBoardComp

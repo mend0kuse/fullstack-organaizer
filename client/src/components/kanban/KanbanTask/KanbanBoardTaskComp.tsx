@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import KanbanBoard from '../../../models/kanbanModels/KanbanBoard';
 import './KanbanItem.scss'
 import { CSSTransition } from 'react-transition-group';
@@ -24,7 +24,7 @@ interface BoardTaskProps {
 	setBoards: (arr: KanbanBoard[]) => void;
 }
 
-const KanbanBoardTaskComp: FC<BoardTaskProps> = ({ getItemToUpdate, item, board, boards, setBoards, currentBoard, currentItem, setCurrentBoard, setCurrentItem }) => {
+const KanbanBoardTaskComp: FC<BoardTaskProps> = memo(({ getItemToUpdate, item, board, boards, setBoards, currentBoard, currentItem, setCurrentBoard, setCurrentItem }) => {
 	const itemLogic = new KanbanTaskLogic()
 
 	const [anim, setAnim] = useState(false)
@@ -75,6 +75,6 @@ const KanbanBoardTaskComp: FC<BoardTaskProps> = ({ getItemToUpdate, item, board,
 			</div>
 		</CSSTransition>
 	)
-}
+})
 
 export default KanbanBoardTaskComp

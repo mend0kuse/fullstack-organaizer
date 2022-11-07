@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react'
+import React, { FC, memo, useContext, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard';
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -23,7 +23,7 @@ interface KanbanProps {
 	setActiveProjectId: (x: number) => void
 }
 
-const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
+const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId }) => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
 	const dispatch = useAppDispatch()
@@ -129,6 +129,6 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 		</>
 	)
-}
+})
 
 export default Kanban

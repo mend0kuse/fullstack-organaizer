@@ -41,7 +41,7 @@ const Select: FC<SelectProps> = ({ value, options, onChange, className }) => {
 				onMouseLeave={() => showDropdown(false)}
 				className="dropdown__list list-dropdown">
 				{options.map(item => {
-					return <div className='list-dropdown__item' onClick={() => hideDropdown(item.value)}>{item.name}</div>
+					return <div key={item.value} className='list-dropdown__item' onClick={() => hideDropdown(item.value)}>{item.name}</div>
 				})}
 			</div>
 		</div>

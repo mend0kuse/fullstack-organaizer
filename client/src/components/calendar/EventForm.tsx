@@ -1,4 +1,4 @@
-import React, { FC, memo, useRef, useState, } from 'react'
+import React, { FC, memo, useState } from 'react'
 import { Day } from '../../models/calendarModels/Day';
 import InputWithUp from '../UI/input/InputWithUp';
 
@@ -17,6 +17,7 @@ const EventForm: FC<EventFormProps> = memo(({ visible, addedDay, addEvent }) => 
 		visible(false)
 		if (addedDay && eventName) {
 			addEvent(addedDay, eventName)
+			setEventName('')
 		}
 	}
 

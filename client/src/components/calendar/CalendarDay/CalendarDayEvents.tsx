@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import Tippy from '@tippyjs/react';
 import { IEvent } from '../../../types/CalendarTypes';
 
@@ -6,7 +6,7 @@ interface CalendarDayEventsProps {
 	events: IEvent[]
 }
 
-const CalendarDayEvents: FC<CalendarDayEventsProps> = ({ events }) => {
+const CalendarDayEvents: FC<CalendarDayEventsProps> = memo(({ events }) => {
 	return (
 		<div className='day-calendar__events events-calendar'>
 			{events.map(ev => {
@@ -18,6 +18,6 @@ const CalendarDayEvents: FC<CalendarDayEventsProps> = ({ events }) => {
 			})}
 		</div>
 	)
-}
+})
 
 export default CalendarDayEvents

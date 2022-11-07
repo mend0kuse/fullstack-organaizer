@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import KanbanBoard from '../../../models/kanbanModels/KanbanBoard';
 import KanbanTask from '../../../models/kanbanModels/KanbanTask';
 import { BoardItemDesc, ButtonTypes, FormsTypes } from '../../../types/KanbanTypes'
@@ -20,7 +20,7 @@ interface ItemFormProps {
 	board: KanbanBoard | undefined;
 }
 
-const KanbanItemForm: FC<ItemFormProps> = ({ itemToUpdate, board, typeForm, addItem, itemDesc, setItemDesc, updateItem }) => {
+const KanbanItemForm: FC<ItemFormProps> = memo(({ itemToUpdate, board, typeForm, addItem, itemDesc, setItemDesc, updateItem }) => {
 
 	function create(e: React.FormEvent) {
 		e.preventDefault()
@@ -45,6 +45,6 @@ const KanbanItemForm: FC<ItemFormProps> = ({ itemToUpdate, board, typeForm, addI
 			<Button type={ButtonTypes.BG_BLUE} onClick={typeForm === FormsTypes.ADD ? e => create(e) : e => update(e)}>{typeForm === FormsTypes.ADD ? 'Создать' : 'Обновить'}</Button>
 		</form >
 	)
-}
+})
 
 export default KanbanItemForm
