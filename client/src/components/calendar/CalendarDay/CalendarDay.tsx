@@ -7,11 +7,11 @@ import './CalendarDay.scss'
 interface CalendarDayProps {
 	className: string;
 	day: Day;
-	setAddedDay: (day: Day) => void;
+	setAddedDay: (dayId: string | null) => void
 	setEventModal: (visible: boolean) => void;
 }
 
-const CalendarDay: FC<CalendarDayProps> = memo(({ className, day, setAddedDay, setEventModal }) => {
+const CalendarDay: FC<CalendarDayProps> = ({ className, day, setAddedDay, setEventModal }) => {
 
 	return (
 		<div className={day.number ? `inner-calendar__day day-calendar ` + className : 'inner-calendar__day day-calendar empty'}>
@@ -19,6 +19,6 @@ const CalendarDay: FC<CalendarDayProps> = memo(({ className, day, setAddedDay, s
 			{day.number && day.events.length > 0 && <CalendarDayEvents events={day.events} />}
 		</div >
 	)
-})
+}
 
 export default CalendarDay

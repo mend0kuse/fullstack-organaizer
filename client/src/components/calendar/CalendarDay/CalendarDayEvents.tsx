@@ -12,7 +12,7 @@ const CalendarDayEvents: FC<CalendarDayEventsProps> = memo(({ events }) => {
 			{events.map(ev => {
 				return (
 					<Tippy content={ev.content}>
-						<div className='events-calendar__item'></div>
+						<div className='events-calendar__item' style={{ background: ev.bg }} ></div>
 					</Tippy>
 				)
 			})}

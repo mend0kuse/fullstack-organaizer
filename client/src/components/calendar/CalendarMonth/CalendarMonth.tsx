@@ -8,7 +8,7 @@ interface CalendarMonthProps {
 	dateShow: DateShowInterface;
 	days: Day[][];
 	events: IEvent[] | undefined;
-	setAddedDay: (day: Day) => void
+	setAddedDay: (dayId: string | null) => void
 	setEventModal: (vis: boolean) => void
 }
 
@@ -30,7 +30,7 @@ const CalendarMonth: FC<CalendarMonthProps> = memo(({ days, events, setAddedDay,
 							day.events = events.filter(event => event.dayId === day.id)
 						}
 						nowDayClass = nowDay && day.number === nowDate.getDate() ? 'now-day' : ''
-						
+
 						return <CalendarDay className={nowDayClass ? nowDayClass : ''} key={index} day={day} setAddedDay={setAddedDay} setEventModal={setEventModal} />
 					})}
 				</div>

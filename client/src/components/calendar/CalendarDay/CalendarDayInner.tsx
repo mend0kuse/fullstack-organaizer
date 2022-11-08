@@ -4,7 +4,7 @@ import { Day } from '../../../models/calendarModels/Day';
 
 interface CalendarDayInnerProps {
 	day: Day;
-	setAddedDay: (day: Day) => void;
+	setAddedDay: (dayId: string | null) => void
 	setEventModal: (visible: boolean) => void;
 }
 
@@ -12,7 +12,7 @@ const CalendarDayInner: FC<CalendarDayInnerProps> = memo(({ day, setAddedDay, se
 	const router = useNavigate()
 
 	const openEventModal = () => {
-		setAddedDay(day)
+		setAddedDay(day.id)
 		setEventModal(true)
 	}
 

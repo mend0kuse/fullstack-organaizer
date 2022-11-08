@@ -11,6 +11,7 @@ import { calendarApi } from '../../services/calendarApi'
 import { createEventDay } from '../../store/store'
 import './CalendarPage.scss'
 import MonthNavigation from '../../components/calendar/CalendarNavigation/MonthNavigation'
+import { IEvent } from '../../types/CalendarTypes'
 
 const CalendarPage: FC = memo(() => {
 	const date: Date = new Date() //текущая дата
@@ -31,14 +32,11 @@ const CalendarPage: FC = memo(() => {
 	const [calendar, setCalendar] = useState<Month>(new Month(dateShow.year, dateShow.month))
 
 	const [eventModal, setEventModal] = useState(false)
-	const [addedDay, setAddedDay] = useState<Day>() //стейт для дня в который будет добовляться событие
+	const [addedDayId, setAddedDayId] = useState<null | string>(null) //стейт для дня в который будет добовляться событие
 
 	const addEvent = useCallback(
-		async (day: Day, newEventContent: string) => {
-			if (day) {
-				const newEv = { content: newEventContent, dayId: day.id, id: Date.now() }
-				jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
-			}
+		async (newEv: IEvent) => {
+			jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
 		}, [jwtToken])
 
 	//переключение месяца при кликах на стрелки или смене селекта
@@ -52,10 +50,10 @@ const CalendarPage: FC = memo(() => {
 			<MonthNavigation dateShow={dateShow} setDateShow={setDateShow} />
 			<div className="calendar">
 				<CalendarWeeksNames />
-				<CalendarMonth days={calendar.days} dateShow={dateShow} events={events} setAddedDay={setAddedDay} setEventModal={setEventModal} />
+				<CalendarMonth days={calendar.days} dateShow={dateShow} events={events} setAddedDay={setAddedDayId} setEventModal={setEventModal} />
 			</div>
 			<Modal visible={eventModal} setVisible={setEventModal}>
-				<EventForm visible={setEventModal} addedDay={addedDay} addEvent={addEvent} />
+				<EventForm visible={setEventModal} addedDay={addedDayId} addEvent={addEvent} />
 			</Modal>
 		</div >
 	)

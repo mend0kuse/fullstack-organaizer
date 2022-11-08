@@ -23,6 +23,7 @@ export interface IEvent {
 	content: string;
 	dayId: string;
 	id: number;
+	bg: string;
 }
 
 export type DayInner = (number | undefined)
