@@ -5,7 +5,7 @@ interface TaskInfoProps {
 	item: KanbanTask
 }
 
-const TaskInfo: FC<TaskInfoProps> = memo(({ item }) => {
+const TaskInfo: FC<TaskInfoProps> = ({ item }) => {
 	return (
 		<div className='task-board__info info-task'>
 			<p className='info-task__direction'>{item.info.direction}</p>
@@ -13,6 +13,6 @@ const TaskInfo: FC<TaskInfoProps> = memo(({ item }) => {
 			<p className='info-task__description'>{item.info.description}</p>
 		</div>
 	)
-})
+}
 
 export default TaskInfo

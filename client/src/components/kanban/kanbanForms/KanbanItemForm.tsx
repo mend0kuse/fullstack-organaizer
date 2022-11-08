@@ -32,6 +32,7 @@ const KanbanItemForm: FC<ItemFormProps> = memo(({ itemToUpdate, board, typeForm,
 	function update(e: React.FormEvent) {
 		e.preventDefault()
 		if (itemToUpdate && updateItem) {
+			console.log(itemDesc);
 			itemToUpdate.info = itemDesc
 			updateItem()
 		}
