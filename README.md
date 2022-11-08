@@ -4,7 +4,7 @@
 
 ## Функционал
 
-- Календарь с возможностью добавить событие на определенный день
+- Календарь с возможностью добавить событие на определенный день(работает пока что только для неавторизованного)
 ![App Screenshot](https://sun9-east.userapi.com/sun9-26/s/v1/ig2/Tj7fYgggytEeMU34br9oLm1NaTrE5av-Na4OfxLG7W5DIkepxS1RUT7SuykrhO0AIyI20abyxpBjFpWTwwSZvzPI.jpg?size=1919x903&quality=96&type=album)
 ![App Screenshot](https://sun9-east.userapi.com/sun9-73/s/v1/ig2/QXZhTZR5OreMUmLyiQvZp8bU1Z8hFD0LQLrKufO2AGFw3p6VUVySCl3XpTQAXbZQ5yx3zD5S7GF-A5umMX7DyCZB.jpg?size=1919x904&quality=96&type=album)
 - Канбан-проекты
