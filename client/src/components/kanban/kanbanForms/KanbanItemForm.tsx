@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import KanbanBoard from '../../../models/kanbanModels/KanbanBoard';
 import KanbanTask from '../../../models/kanbanModels/KanbanTask';
 import { BoardItemDesc, ButtonTypes, FormsTypes } from '../../../types/KanbanTypes'
@@ -20,7 +20,7 @@ interface ItemFormProps {
 	board: KanbanBoard | undefined;
 }
 
-const KanbanItemForm: FC<ItemFormProps> = ({ itemToUpdate, board, typeForm, addItem, itemDesc, setItemDesc, updateItem }) => {
+const KanbanItemForm: FC<ItemFormProps> = memo(({ itemToUpdate, board, typeForm, addItem, itemDesc, setItemDesc, updateItem }) => {
 
 	function create(e: React.FormEvent) {
 		e.preventDefault()
@@ -39,12 +39,12 @@ const KanbanItemForm: FC<ItemFormProps> = ({ itemToUpdate, board, typeForm, addI
 
 	return (
 		<form className='kanban-form'>
-			<InputWithUp type='text' placeholder='Название' value={itemDesc.title} onChange={e => setItemDesc({ ...itemDesc, title: e.target.value })} />
-			<InputWithUp type='text' placeholder='Описание' value={itemDesc.description} onChange={e => setItemDesc({ ...itemDesc, description: e.target.value })} />
-			<InputWithUp type='text' placeholder='Направление' value={itemDesc.direction} onChange={e => setItemDesc({ ...itemDesc, direction: e.target.value })} />
+			<InputWithUp type='text' className='black' placeholder='Название' value={itemDesc.title} onChange={e => setItemDesc({ ...itemDesc, title: e.target.value })} />
+			<InputWithUp type='text' className='black' placeholder='Описание' value={itemDesc.description} onChange={e => setItemDesc({ ...itemDesc, description: e.target.value })} />
+			<InputWithUp type='text' className='black' placeholder='Направление' value={itemDesc.direction} onChange={e => setItemDesc({ ...itemDesc, direction: e.target.value })} />
 			<Button type={ButtonTypes.BG_BLUE} onClick={typeForm === FormsTypes.ADD ? e => create(e) : e => update(e)}>{typeForm === FormsTypes.ADD ? 'Создать' : 'Обновить'}</Button>
 		</form >
 	)
-}
+})
 
 export default KanbanItemForm

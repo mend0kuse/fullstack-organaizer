@@ -1,5 +1,6 @@
-import React, { FC, forwardRef, RefObject, useRef, } from 'react'
+import React, { FC, memo, useState } from 'react'
 import { Day } from '../../models/calendarModels/Day';
+import InputWithUp from '../UI/input/InputWithUp';
 
 interface EventFormProps {
 	addedDay: Day | undefined;
@@ -8,23 +9,24 @@ interface EventFormProps {
 }
 
 
-const EventForm: FC<EventFormProps> = ({ visible, addedDay, addEvent }) => {
-	const eventName = useRef<HTMLInputElement>(null)
-	
+const EventForm: FC<EventFormProps> = memo(({ visible, addedDay, addEvent }) => {
+	const [eventName, setEventName] = useState('')
+
 	function submitEvent(e: React.FormEvent) {
 		e.preventDefault()
 		visible(false)
-		if (addedDay && eventName.current) {
-			addEvent(addedDay, eventName.current?.value)
+		if (addedDay && eventName) {
+			addEvent(addedDay, eventName)
+			setEventName('')
 		}
 	}
 
 	return (
 		<form>
-			<input type="text" ref={eventName} />
+			<InputWithUp placeholder='Название' className='black' value={eventName} onChange={e => setEventName(e.target.value)} />
 			<button onClick={submitEvent}>Добавить</button>
 		</form>
 	)
-}
+})
 
 export default EventForm

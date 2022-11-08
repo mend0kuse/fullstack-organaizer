@@ -1,17 +1,29 @@
 import { DayInner } from "../../types/CalendarTypes";
 import { Day } from './Day'
 
-
 export class Month {
-	days: Day[][] = []
+	days: Day[][];
+
+	constructor(year: number, month: number) {
+		this.days = new MonthDrawer(year, month).draw()
+	}
+}
+
+class MonthDrawer {
 	year: number;
 	month: number;
-	title: string;
 
 	constructor(year: number, month: number) {
 		this.year = year;
 		this.month = month;
-		this.title = this.getTitle(year, month)
+	}
+
+	draw() {
+		let arr = this.range(this.getLastDay(this.year, this.month));
+		let firstWeekDay = this.getFirstWeekDay(this.year, this.month);
+		let lastWeekDay = this.getLastWeekDay(this.year, this.month);
+		let arrayDays = this.chunk(this.normalize(arr, firstWeekDay, 7 - lastWeekDay))
+		return this.initDays(arrayDays)
 	}
 
 	range(count: number): number[] {
@@ -67,69 +79,18 @@ export class Month {
 		}
 	}
 
-	initDays(array: DayInner[][] | undefined): void {
+	initDays(array: DayInner[][] | undefined): Day[][] {
+		const result: Day[][] = []
 		if (array) {
 			for (let i = 0; i < array.length; i++) {
 				let row = []
 				for (let j = 0; j < array[i].length; j++) {
 					row.push(new Day(array[i][j], this.month, this.year))
 				}
-				this.days.push(row)
+				result.push(row)
 			}
 		}
-	}
-
-	getTitle(year: number, month: number) {
-		let str: string = '';
-		switch (month) {
-			case 0:
-				str += 'Январь'
-				break;
-			case 1:
-				str += 'Февраль'
-				break;
-			case 2:
-				str += 'Март'
-				break;
-			case 3:
-				str += 'Апрель'
-				break;
-			case 4:
-				str += 'Май'
-				break;
-			case 5:
-				str += 'Июнь'
-				break;
-			case 6:
-				str += 'Июль'
-				break;
-			case 7:
-				str += 'Август'
-				break;
-			case 8:
-				str += 'Сентябрь'
-				break;
-			case 9:
-				str += 'Октябрь'
-				break;
-			case 10:
-				str += 'Ноябрь'
-				break;
-			case 11:
-				str += 'Декабрь'
-				break;
-
-		}
-		str += year
-		return str
-	}
-
-	draw() {
-		let arr = this.range(this.getLastDay(this.year, this.month));
-		let firstWeekDay = this.getFirstWeekDay(this.year, this.month);
-		let lastWeekDay = this.getLastWeekDay(this.year, this.month);
-		let arrayDays = this.chunk(this.normalize(arr, firstWeekDay, 7 - lastWeekDay))
-		this.initDays(arrayDays)
+		return result
 	}
 
 }

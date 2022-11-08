@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react'
 
-const CalendarWeeksNames = () => {
+const CalendarWeeksNames = memo(() => {
 	return (
 		<div className="calendar__names names-calendar">
 			<div className="names-calendar__item">ПН</div>
@@ -12,6 +12,6 @@ const CalendarWeeksNames = () => {
 			<div className="names-calendar__item">ВС</div>
 		</div>
 	)
-}
+})
 
 export default CalendarWeeksNames

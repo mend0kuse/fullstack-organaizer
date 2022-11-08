@@ -1,3 +1,9 @@
+export interface DateShowInterface {
+	year: number;
+	month: number;
+}
+
+
 export enum Months {
 	JAN = 'Январь',
 	FEB = 'Февраль',

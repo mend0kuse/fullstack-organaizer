@@ -1,20 +1,20 @@
-import React, { FC, useContext, useState } from 'react'
+import React, { FC, memo, useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-import { ButtonTypes } from '../../types/KanbanTypes'
+import { ButtonTypes } from '../../../types/KanbanTypes'
 
 import './navbar.scss'
-import anon from '../../img/Anon1.jpg'
+import anon from '../../../img/Anon1.jpg'
 
-import { AuthToken } from '../../context/authContext';
-import { authService } from '../../services/authService';
-import Button from '../UI/button/Button';
+import { AuthToken } from '../../../context/authContext';
+import { authService } from '../../../services/authService';
+import Button from '../../UI/button/Button';
 
 interface NavbarProps {
 	navbarOpen: boolean
 }
 
-const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
+const Navbar: FC<NavbarProps> = memo(({ navbarOpen }) => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 	const { data: profile } = authService.useUserInfoQuery(jwtToken)
 
@@ -51,6 +51,6 @@ const Navbar: FC<NavbarProps> = ({ navbarOpen }) => {
 			</ul>
 		</nav >
 	)
-}
+})
 
 export default Navbar

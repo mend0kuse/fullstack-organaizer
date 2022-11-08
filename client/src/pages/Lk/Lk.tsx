@@ -16,7 +16,8 @@ const Lk = () => {
 	const [uploadFile, setUploadFile] = useState<FileList | null>(null);
 
 
-	const uploadAvatar = async () => {
+	const uploadAvatar = async (e: React.FormEvent) => {
+		e.preventDefault()
 		let formData = new FormData()
 		if (uploadFile) {
 			if (data?._id) {
@@ -25,7 +26,6 @@ const Lk = () => {
 			}
 			await sendAvatar(formData)
 		}
-
 	}
 
 	return (
@@ -39,11 +39,7 @@ const Lk = () => {
 						: <img src={anon} className='avatar' alt=''></img>
 					}
 					<input type="file" onChange={(e) => setUploadFile(e.target.files)} />
-					<Button type={ButtonTypes.BG_BLUE} onClick={e => {
-						e.preventDefault()
-						uploadAvatar()
-					}
-					}>Поставить аватар</Button>
+					<Button type={ButtonTypes.BG_BLUE} onClick={uploadAvatar}>Поставить аватар</Button>
 				</form>
 			}
 		</div>

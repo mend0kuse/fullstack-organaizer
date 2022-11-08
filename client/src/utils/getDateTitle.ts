@@ -1,66 +1,66 @@
 export const getDateTitle = (month: number, dayOfWeek: number, day: number) => {
-	let str = '';
+	let title = '';
 	switch (dayOfWeek) {
 		case 0:
-			str += 'Воскресенье, '
+			title += 'Воскресенье, '
 			break;
 		case 1:
-			str += 'Понедельник, '
+			title += 'Понедельник, '
 			break;
 		case 2:
-			str += 'Вторник, '
+			title += 'Вторник, '
 			break;
 		case 3:
-			str += 'Среда, '
+			title += 'Среда, '
 			break;
 		case 4:
-			str += 'Четверг, '
+			title += 'Четверг, '
 			break;
 		case 5:
-			str += 'Пятница, '
+			title += 'Пятница, '
 			break;
 		case 6:
-			str += 'Суббота, '
+			title += 'Суббота, '
 			break;
 	}
-	str += day + ' '
+	title += day + ' '
 	switch (month) {
 		case 0:
-			str += 'Января'
+			title += 'Января'
 			break;
 		case 1:
-			str += 'Февраля'
+			title += 'Февраля'
 			break;
 		case 2:
-			str += 'Марта'
+			title += 'Марта'
 			break;
 		case 3:
-			str += 'Апреля'
+			title += 'Апреля'
 			break;
 		case 4:
-			str += 'Мая'
+			title += 'Мая'
 			break;
 		case 5:
-			str += 'Июня'
+			title += 'Июня'
 			break;
 		case 6:
-			str += 'Июля'
+			title += 'Июля'
 			break;
 		case 7:
-			str += 'Августа'
+			title += 'Августа'
 			break;
 		case 8:
-			str += 'Сентября'
+			title += 'Сентября'
 			break;
 		case 9:
-			str += 'Октября'
+			title += 'Октября'
 			break;
 		case 10:
-			str += 'Ноября'
+			title += 'Ноября'
 			break;
 		case 11:
-			str += 'Декабря'
+			title += 'Декабря'
 			break;
 	}
-	return str
+	return title
 }

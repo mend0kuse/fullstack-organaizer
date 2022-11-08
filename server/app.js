@@ -9,7 +9,6 @@ import { routerAuth } from './routers/AuthRouter.js'
 import { routerKanban } from './routers/kanbanRouter.js';
 import { routerCalendar } from './routers/calendarRouter.js';
 import { lkRouter } from './routers/lkRouter.js';
-import { corsOptions } from './config.js';
 
 
 
@@ -18,7 +17,7 @@ const __dirname = path.resolve()
 const PORT = 5000;
 
 app.use(bodyParser.json());
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json({ extended: true }))
 app.use('/images', express.static(path.resolve(__dirname, 'server/images')));
 

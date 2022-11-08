@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, memo, useEffect, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard'
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -8,6 +8,7 @@ import './KanbanBoard.scss'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import { CSSTransition } from 'react-transition-group';
+import KanbanBoardHead from './KanbanBoardHead';
 
 interface BoardProps {
 
@@ -34,7 +35,7 @@ interface BoardProps {
 
 }
 
-const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, setFormType, setBoardAdd, itemDesc, setItemDesc, board, project, setCurrentBoard, setCurrentItem, currentBoard, boards, currentItem, setBoards }) => {
+const KanbanBoardComp: FC<BoardProps> = memo(({ getItemToUpdate, setModalVisible, setFormType, setBoardAdd, itemDesc, setItemDesc, board, project, setCurrentBoard, setCurrentItem, currentBoard, boards, currentItem, setBoards }) => {
 
 	const boardLogic = new KanbanBoardLogic()
 
@@ -62,15 +63,7 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 	return (
 		<div className='project-kanban__board board-project'>
 			<CSSTransition in={anim} timeout={300} mountOnEnter classNames='head-board'>
-				<div className={`board-project__head head-board ${board.headBg}`} >
-					<button className='head-board__delete _icon-Trash' onClick={() => delDesk(board.id)}></button>
-					<Tippy content={board.name} theme="light" >
-						<h2 className='head-board__name'>
-							<span>{board.name}</span>
-						</h2>
-					</Tippy>
-					<button className='head-board__add' onClick={addItemModalShow}>+</button>
-				</div>
+				<KanbanBoardHead addItemModalShow={addItemModalShow} board={board} delDesk={delDesk} />
 			</CSSTransition>
 			<div
 				key={board.id}
@@ -83,6 +76,6 @@ const KanbanBoardComp: FC<BoardProps> = ({ getItemToUpdate, setModalVisible, set
 			</div>
 		</div >
 	)
-}
+})
 
 export default KanbanBoardComp

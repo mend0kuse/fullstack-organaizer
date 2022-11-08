@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, memo, useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group';
 
 import Input from '../UI/input/Input';
@@ -10,7 +10,7 @@ interface AddFieldProps {
 	className: string
 }
 
-const KanbanAddField: FC<AddFieldProps> = ({ className, value, setValue, fn }) => {
+const KanbanAddField: FC<AddFieldProps> = memo(({ className, value, setValue, fn }) => {
 	const [anim, setAnim] = useState(false)
 
 	useEffect(() => {
@@ -32,6 +32,6 @@ const KanbanAddField: FC<AddFieldProps> = ({ className, value, setValue, fn }) =
 			</div>
 		</CSSTransition>
 	)
-}
+})
 
 export default KanbanAddField

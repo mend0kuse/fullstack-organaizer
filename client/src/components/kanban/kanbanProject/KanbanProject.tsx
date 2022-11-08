@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react'
+import React, { FC, memo, useContext, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard';
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -9,7 +9,6 @@ import './kanbanProject.scss'
 
 import KanbanBoardComp from '../kanbanBoard/KanbanBoardComp';
 import KanbanItemForm from '../kanbanForms/KanbanItemForm';
-import mark from '../../../img/mark.svg'
 import KanbanAddField from '../KanbanAddField';
 import Button from '../../UI/button/Button';
 import { kanbanApi } from '../../../services/kanbanApi';
@@ -24,7 +23,7 @@ interface KanbanProps {
 	setActiveProjectId: (x: number) => void
 }
 
-const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
+const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId }) => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
 	const dispatch = useAppDispatch()
@@ -40,7 +39,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 		))
 
 	const [newDeskTitle, setNewDeskTitle] = useState('') //название новой доски
-	const [newDeskInp, setNewDeskInp] = useState(false) //видимость инпута для создания новой доски
+	const [newDeskInpVisible, setNewDeskInpVisible] = useState(false) //видимость инпута для создания новой доски
 
 	const [itemDesc, setItemDesc] = useState<BoardItemDesc>({ title: '', description: '', direction: '' }) // описание итема
 
@@ -58,7 +57,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 	function getColor() {
 		setColorNumber(prev => prev + 1)
-		if (colorNumber == 2) {
+		if (colorNumber === 2) {
 			setColorNumber(0)
 		}
 		const color = BoardHeadColors[colorNumber]
@@ -91,7 +90,7 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 			const newBoard = new KanbanBoard(Date.now(), newDeskTitle, getColor(), [])
 			setBoards([...boards, newBoard])
 			setNewDeskTitle('')
-			setNewDeskInp(false)
+			setNewDeskInpVisible(false)
 		}
 	}
 
@@ -104,30 +103,32 @@ const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId }) => {
 
 
 	return (
-		<div className='kanban__project project-kanban'>
-			<div className='project-kanban__inner'>
-				{boards.map(board =>
-					<KanbanBoardComp key={board.id} setBoardAdd={setBoardAdd} setFormType={setFormType} setModalVisible={setModalVisible} board={board} setBoards={setBoards} setItemDesc={setItemDesc} itemDesc={itemDesc} boards={boards} currentBoard={currentBoard} currentItem={currentItem} project={project} setCurrentBoard={setCurrentBoard} setCurrentItem={setCurrentItem} getItemToUpdate={getItemToUpdate} />
-				)}
-				<div className='project-kanban__add-desk add-desk'>
-					{newDeskInp && <KanbanAddField className='add-desk__field' value={newDeskTitle} setValue={setNewDeskTitle} fn={addDesk} />}
-					<Button type={ButtonTypes.BG_NONE} className='add-desk__btn' onClick={e => setNewDeskInp(!newDeskInp)}>{newDeskInp ? 'Закрыть' : '+ Доска'}</Button>
+		<>
+			<div className='kanban__project project-kanban'>
+				<div className='project-kanban__inner'>
+					{boards.map(board =>
+						<KanbanBoardComp key={board.id} setBoardAdd={setBoardAdd} setFormType={setFormType} setModalVisible={setModalVisible} board={board} setBoards={setBoards} setItemDesc={setItemDesc} itemDesc={itemDesc} boards={boards} currentBoard={currentBoard} currentItem={currentItem} project={project} setCurrentBoard={setCurrentBoard} setCurrentItem={setCurrentItem} getItemToUpdate={getItemToUpdate} />
+					)}
+					<div className='project-kanban__add-desk add-desk'>
+						{newDeskInpVisible && <KanbanAddField className='add-desk__field' value={newDeskTitle} setValue={setNewDeskTitle} fn={addDesk} />}
+						<Button type={ButtonTypes.BG_NONE} className='add-desk__btn' onClick={e => setNewDeskInpVisible(!newDeskInpVisible)}>{newDeskInpVisible ? 'Закрыть' : '+ Доска'}</Button>
+					</div>
 				</div>
-			</div>
-			<div className='project-kanban__buttons'>
-				<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProjHandler(project.id)} >Удалить проект</Button>
-				<Button type={ButtonTypes.BG_BLUE}
-					onClick={jwtToken
-						? () => saveProject([project.id, boards])
-						: () => dispatch(saveKanbProject({ id: project.id, boards }))}>Сохранить</Button>
-			</div>
+				<div className='project-kanban__buttons'>
+					<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProjHandler(project.id)} >Удалить проект</Button>
+					<Button type={ButtonTypes.BG_BLUE}
+						onClick={jwtToken
+							? () => saveProject([project.id, boards])
+							: () => dispatch(saveKanbProject({ id: project.id, boards }))}>Сохранить</Button>
+				</div>
+			</div >
 
 			<Modal visible={modalVisible} setVisible={setModalVisible}>
 				<KanbanItemForm itemDesc={itemDesc} board={boardAdd} itemToUpdate={itemToUpdate} setItemDesc={setItemDesc} typeForm={formType} addItem={addNewItem} updateItem={finishUpdateItem} />
 			</Modal>
 
-		</div >
+		</>
 	)
-}
+})
 
 export default Kanban

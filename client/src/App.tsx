@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import './App.scss';
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './components/AppRouter';
-import Navbar from './components/navbar/Navbar';
+import Navbar from './components/header/navbar/Navbar';
 import Header from './components/header/Header';
 import { TokenContext } from './context/authContext';
 import { AuthToken } from './context/authContext';
@@ -19,7 +19,6 @@ function App() {
         <AppRouter />
       </BrowserRouter>
     </AuthToken.Provider>
-
   );
 }
 
