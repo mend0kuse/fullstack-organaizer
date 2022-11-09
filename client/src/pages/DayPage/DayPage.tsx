@@ -11,11 +11,15 @@ import EventForm from '../../components/calendar/EventForm'
 import { createEventDay } from '../../store/store'
 import { Day } from '../../models/calendarModels/Day'
 import { AuthToken } from '../../context/authContext'
+import DayPageInner from './DayPageInner'
+import { MonthDrawer } from '../../models/calendarModels/Month'
+import DayPageNavigation from './DayPageNavigation'
 
 const DayPage = memo(() => {
 	const params = useParams()
 	const dispatch = useAppDispatch()
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
+
 
 	let events: IEvent[] = []
 	const eventsRedux = useAppSelector(state => state.events.events.filter(ev => ev.dayId === params.id))
@@ -23,45 +27,42 @@ const DayPage = memo(() => {
 
 	const [createEvent] = calendarApi.useAddEventMutation()
 
-
+	let dayIdString: string[] = []
 	if (params.id) {
 		const { data } = calendarApi.useGetEventsByIdQuery(params.id)
 		events = data ? data : eventsRedux
+		dayIdString = params.id?.split('_');
 	}
 
-	let dayIdString = params.id?.split('_');
 
 	const [date, setDate] = useState<Date>()
 	const [eventModal, setEventModal] = useState(false)
 
-	const addEvent = useCallback(
-		async (newEv: IEvent) => {
-			jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
-		}, [jwtToken])
+
+
+	const addEvent = async (newEv: IEvent) => {
+		jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
+	}
 
 	useEffect(() => {
-		if (dayIdString) {
-			setDate(new Date(+dayIdString[2], +dayIdString[1] - 1, +dayIdString[0]))
-		}
-	}, [])
+		setDate(new Date(+dayIdString[2], +dayIdString[1] - 1, +dayIdString[0]))
+	}, [params.id])
+
 
 
 	return (
-		<div className='daypage__container'>
-			{date && <h2 className='daypage__title'>{getDateTitle(date.getMonth(), date.getDay(), date.getDate())}</h2>}
-			<div className="daypage__inner inner-daypage">
-				{events.length > 0
-					? <div className="inner-daypage__events events-daypage">
-						{events.map((ev, index) => <DayPageEvent ev={ev} key={index} />)}
-					</div>
-					: <h3 className='inner-daypage__nothing'>Событий на этот день нет</h3>
-				}
-				<button onClick={() => setEventModal(true)} >Добавить</button>
+		<>
+			<div className='daypage__container'>
+				{date && <DayPageNavigation date={date}/>}
+				{date && <h2 className='daypage__title'>{getDateTitle(date.getFullYear(), date.getMonth(), date.getDay(), date.getDate())}</h2>}
+				{events && <DayPageInner events={events} setEventModal={setEventModal} />}
 			</div>
+
 			<Modal visible={eventModal} setVisible={setEventModal}>
 				<EventForm visible={setEventModal} addedDay={params.id} addEvent={addEvent} />
 			</Modal>
-		</div>
+		</>
+
 	)
 })
 

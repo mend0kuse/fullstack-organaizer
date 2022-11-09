@@ -25,11 +25,9 @@ const KanbanProjectsPage: FC = memo(() => {
 
 	const addProject = async (nameProject: string) => {
 		const newProj = new KanbanProject(Date.now(), nameProject, [])
-		if (jwtToken) {
-			await createProj(newProj)
-		} else {
-			dispatch(addKanbProject(newProj))
-		}
+
+		jwtToken ? await createProj(newProj) : dispatch(addKanbProject(newProj))
+
 		setActiveProjectId(newProj.id)
 	}
 

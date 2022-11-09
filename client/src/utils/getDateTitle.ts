@@ -1,4 +1,4 @@
-export const getDateTitle = (month: number, dayOfWeek: number, day: number) => {
+export const getDateTitle = (year: number, month: number, dayOfWeek: number, day: number) => {
 	let title = '';
 	switch (dayOfWeek) {
 		case 0:
@@ -62,5 +62,5 @@ export const getDateTitle = (month: number, dayOfWeek: number, day: number) => {
 			title += 'Декабря'
 			break;
 	}
-	return title
+	return title + ' ' + year
 }

@@ -6,7 +6,7 @@ interface CalendarDayEventsProps {
 	events: IEvent[]
 }
 
-const CalendarDayEvents: FC<CalendarDayEventsProps> = memo(({ events }) => {
+const CalendarDayEvents: FC<CalendarDayEventsProps> = ({ events }) => {
 	return (
 		<div className='day-calendar__events events-calendar'>
 			{events.map(ev => {
@@ -18,6 +18,6 @@ const CalendarDayEvents: FC<CalendarDayEventsProps> = memo(({ events }) => {
 			})}
 		</div>
 	)
-})
+}
 
 export default CalendarDayEvents

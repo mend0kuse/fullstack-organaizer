@@ -5,7 +5,7 @@ import { authMiddleware } from '../middleware/authMiddleware.js';
 export const routerKanban = express.Router();
 
 routerKanban.get('/', authMiddleware, kanbanController.getAll)
-routerKanban.post('/', authMiddleware, kanbanController.getAll)
-routerKanban.delete('/:id', authMiddleware, kanbanController.deleteOne)
-routerKanban.put('/:id', authMiddleware, kanbanController.updateOne)
+routerKanban.post('/', kanbanController.getAll)
+routerKanban.delete('/:id', kanbanController.deleteOne)
+routerKanban.put('/:id', kanbanController.updateOne)
 

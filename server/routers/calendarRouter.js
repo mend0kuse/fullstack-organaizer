@@ -1,4 +1,6 @@
 import express from 'express'
+import { authMiddleware } from '../middleware/authMiddleware.js';
+
 
 import calendarController from '../controllers/calendarController.js';
 
@@ -8,7 +10,7 @@ routerCalendar.get('/', calendarController.getAll)
 
 routerCalendar.post('/', calendarController.createOne)
 
-routerCalendar.get('/:id', calendarController.getByDayId)
+routerCalendar.get('/:id', authMiddleware, calendarController.getByDayId)
 
 routerCalendar.delete('/:id', calendarController.deleteOne)
 

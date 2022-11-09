@@ -9,7 +9,7 @@ export class Month {
 	}
 }
 
-class MonthDrawer {
+export class MonthDrawer {
 	year: number;
 	month: number;
 

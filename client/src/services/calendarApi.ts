@@ -7,7 +7,7 @@ export const calendarApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/calendar' }),
 	tagTypes: ['calendar'],
 	endpoints: (builder) => ({
-		
+
 		//получение событий
 		getEvents: builder.query<IEvent[], string>({
 			query: () => ({
@@ -30,6 +30,14 @@ export const calendarApi = createApi({
 				url: `/`,
 				method: 'POST',
 				body: { ...newEvent }
+			}),
+			invalidatesTags: result => ['calendar'],
+		}),
+		
+		deleteEvent: builder.mutation<IEvent[], number>({
+			query: (id) => ({
+				url: `/${id}`,
+				method: 'DELETE',
 			}),
 			invalidatesTags: result => ['calendar'],
 		}),

@@ -2,6 +2,7 @@
 
 .daypage {
 	&__container {
+		position: relative;
 		display: flex;
 		align-items: center;
 		row-gap: 40px;
@@ -13,7 +14,38 @@
 		font-weight: bold;
 	}
 }
+.navigation-daypage{
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+	padding: 0 100px;
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	&__arrow{
 
+		background: none;
+		&::before {
+			font-size: 100px;
+			transition: 0.2s linear all;
+			color: rgba(255, 255, 255, 0.5);
+		}
+		&:hover {
+			&::before {
+				color: white;
+			}
+		}
+	}
+	&__next{
+		&::before {
+			transform: rotate(-180deg);
+		}
+		
+	}
+	&__prev{
+	}
+}
 .inner-daypage {
 	background-color: white;
 	width: 500px;
