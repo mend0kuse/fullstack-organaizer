@@ -1,4 +1,4 @@
-import React, { FC, memo, useContext, useState } from 'react'
+import React, { FC, memo, useContext, useEffect, useState } from 'react'
 import Kanban from '../../components/kanban/kanbanProject/KanbanProject'
 import KanbanProject from '../../models/kanbanModels/KanbanProject'
 import './KanbanProjectsPage.scss'
@@ -8,6 +8,8 @@ import { AuthToken } from '../../context/authContext'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux/reduxHooks'
 import { addKanbProject } from '../../store/store'
 import KanbanProjectsTabs from './KanbanProjectsTabs'
+import socket from '../../socket'
+
 
 const KanbanProjectsPage: FC = memo(() => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
