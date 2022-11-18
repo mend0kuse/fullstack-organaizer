@@ -4,15 +4,19 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import path from 'path'
 
-
 import { routerAuth } from './routers/AuthRouter.js'
 import { routerKanban } from './routers/kanbanRouter.js';
 import { routerCalendar } from './routers/calendarRouter.js';
 import { lkRouter } from './routers/lkRouter.js';
-
+import { createServer } from 'http'
+import { Server } from "socket.io";
 
 
 const app = express()
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+
 const __dirname = path.resolve()
 const PORT = 5000;
 
@@ -21,7 +25,7 @@ app.use(cors())
 app.use(express.json({ extended: true }))
 app.use('/images', express.static(path.resolve(__dirname, 'server/images')));
 
-app.listen(PORT, dbsConnect)
+httpServer.listen(PORT, dbsConnect)
 
 app.use('/projects', routerKanban)
 app.use('/calendar', routerCalendar)
