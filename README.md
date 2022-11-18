@@ -1,4 +1,4 @@
-# Fullstack organaizer
+# Fullstack organaizer(по ссылке только фронт)
 
 Приложение для организации личных дел
 
