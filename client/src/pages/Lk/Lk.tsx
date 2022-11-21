@@ -10,7 +10,9 @@ import { ButtonTypes } from '../../types/KanbanTypes'
 
 const Lk = () => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
-	const { data, isSuccess, isError } = authService.useUserInfoQuery(jwtToken)
+	const { data, refetch, isSuccess, isError } = authService.useUserInfoQuery(jwtToken)
+
+	useEffect(() => { refetch() }, [jwtToken])
 
 	const [sendAvatar, info] = authService.useSendAvatarMutation()
 	const [uploadFile, setUploadFile] = useState<FileList | null>(null);

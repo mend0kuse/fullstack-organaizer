@@ -21,9 +21,7 @@ const KanbanProjectsPage: FC = memo(() => {
 	const { data, refetch } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
 	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта в базу данных
 
-	useEffect(() => {
-		refetch()
-	}, [jwtToken])
+	useEffect(() => { refetch() }, [jwtToken])
 
 	//ЕСЛИ ПОЛЬЗОВАТЕЛЬ АВТОРИЗОВАН,ТО ПРОЕКТЫ С БАЗЫ,ЕСЛИ НЕТ,ТО РАБОТАЕТ С ПРОЕКТАМИ С РЕДАКСА
 	const kanbProjects = data

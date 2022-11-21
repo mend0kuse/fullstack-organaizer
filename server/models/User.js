@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
 	notifications: [
 		{
 			from: { type: String, required: true },
-			project: { type: Number, required: true }
+			project: { type: String, required: true }
 		}
 	]
 })
