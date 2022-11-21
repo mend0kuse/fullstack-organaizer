@@ -1,9 +1,10 @@
 import { Kanban } from '../models/Kanban.js';
 
 class KanbanConroller {
-	async getAll(req, res) {
+	async getAllById(req, res) {
 		try {
-			const result = await Kanban.find()
+			const user = req.user.id
+			const result = await Kanban.find({ userId: user })
 			res.status(200).send(result)
 		} catch (error) {
 			res.status(400).send(error.message)
@@ -12,7 +13,8 @@ class KanbanConroller {
 	}
 	async createOne(req, res) {
 		try {
-			const newProj = new Kanban({ ...req.body })
+			const userId = req.user.id
+			const newProj = new Kanban({ ...req.body, userId: userId })
 			await newProj.save()
 			res.send(newProj)
 		} catch (error) {
@@ -43,6 +45,20 @@ class KanbanConroller {
 			res.status(400).send(error)
 		}
 	}
+	async postMsgInChat(id, username, msg) {
+		try {
+			await Kanban.updateOne({ id: id }, {
+				$push: { messages: { username: username, content: msg } }
+			})
+
+			let proj = await Kanban.findOne({ id: id })
+
+			return proj.messages
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 }
 
 export default new KanbanConroller()

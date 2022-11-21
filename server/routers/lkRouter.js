@@ -20,3 +20,7 @@ const upload = multer({ storage: store }).single('file'); // загрузка о
 lkRouter.get('/', authMiddleware, LkConroller.userInfo)
 
 lkRouter.post('/avatar', upload, LkConroller.uploadAvatar)
+
+lkRouter.post('/invite', authMiddleware, LkConroller.inviteInProject)
+
+lkRouter.post('/accept', LkConroller.acceptInviteProject)

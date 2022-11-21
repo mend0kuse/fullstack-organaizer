@@ -8,27 +8,34 @@ import { AuthToken } from '../../context/authContext'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux/reduxHooks'
 import { addKanbProject } from '../../store/store'
 import KanbanProjectsTabs from './KanbanProjectsTabs'
-import socket from '../../socket'
+import { authService } from '../../services/authService'
 
 
 const KanbanProjectsPage: FC = memo(() => {
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
+	const { data: user } = authService.useUserInfoQuery(jwtToken)
 
 	const projects = useAppSelector((state) => state.kanban.projects)
 	const dispatch = useAppDispatch()
 
-	const { data, isError } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
+	const { data, refetch } = kanbanApi.useGetProjectsQuery(jwtToken) //получение с базы проектов
 	const [createProj, asd] = kanbanApi.useCreateProjectMutation() // функция создания проекта в базу данных
 
-	const kanbProjects = data ? data.map(i => new KanbanProject(i.id, i.name, i.boards)) : projects.map(i => new KanbanProject(i.id, i.name, i.boards))
+	useEffect(() => {
+		refetch()
+	}, [jwtToken])
 
 	//ЕСЛИ ПОЛЬЗОВАТЕЛЬ АВТОРИЗОВАН,ТО ПРОЕКТЫ С БАЗЫ,ЕСЛИ НЕТ,ТО РАБОТАЕТ С ПРОЕКТАМИ С РЕДАКСА
+	const kanbProjects = data
+		? data.map(i => new KanbanProject(i.id, i.name, i.boards, i.messages))
+		: projects.map(i => new KanbanProject(i.id, i.name, i.boards, i.messages))
+
 	const [activeProjectId, setActiveProjectId] = useState<number | null>(null)
 
 	const addProject = async (nameProject: string) => {
-		const newProj = new KanbanProject(Date.now(), nameProject, [])
+		const newProj = new KanbanProject(Date.now(), nameProject, [], [])
 
-		jwtToken ? await createProj(newProj) : dispatch(addKanbProject(newProj))
+		jwtToken ? await createProj([newProj, jwtToken]) : dispatch(addKanbProject(newProj))
 
 		setActiveProjectId(newProj.id)
 	}
@@ -40,7 +47,7 @@ const KanbanProjectsPage: FC = memo(() => {
 			<KanbanProjectsTabs activeProjectId={activeProjectId} addProject={addProject} kanbProjects={kanbProjects} setActiveProjectId={setActiveProjectId} />
 			{kanbProjects && kanbProjects.map(project => {
 				if (project.id === activeProjectId) {
-					return <Kanban project={project} key={project.id} setActiveProjectId={setActiveProjectId} projects={kanbProjects} />
+					return <Kanban username={user && user.username} project={project} key={project.id} setActiveProjectId={setActiveProjectId} projects={kanbProjects} />
 				}
 			})}
 		</div>

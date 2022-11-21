@@ -4,6 +4,18 @@ export interface BoardItemDesc {
 	direction: string;
 }
 
+export interface INotification {
+	invitedUser?: string;
+	from?: string;
+	_id?: string;
+	project: number;
+}
+
+export interface ChatMessage {
+	username: any,
+	content: string
+}
+
 export enum ButtonTypes {
 	BG_BLUE = 'btn-white',
 	BG_NONE = 'btn-bgnone',
@@ -19,3 +31,4 @@ export enum BoardHeadColors {
 	'yellow' = 1,
 	'blue' = 2,
 }
+

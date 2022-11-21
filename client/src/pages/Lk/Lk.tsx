@@ -15,6 +15,7 @@ const Lk = () => {
 	const [sendAvatar, info] = authService.useSendAvatarMutation()
 	const [uploadFile, setUploadFile] = useState<FileList | null>(null);
 
+	const [acceptInvite] = authService.useAcceptInviteMutation()
 
 	const uploadAvatar = async (e: React.FormEvent) => {
 		e.preventDefault()
@@ -30,6 +31,20 @@ const Lk = () => {
 
 	return (
 		<div className='lk__container'>
+			<div>
+				Уведомления:
+				{data && data.notifications && data.notifications.map(not => {
+					return (
+						<div>
+							<p>Приглашение от {not.from}</p>
+							<p>В проект {not.project}</p>
+							<button onClick={() => {
+								if (not._id) acceptInvite([not._id, data._id])
+							}} >Принять</button>
+						</div>
+					)
+				})}
+			</div>
 			{isError && <h1>АВТОРИзуйтесь</h1>}
 			{isSuccess &&
 				<form className='lk__profile'>

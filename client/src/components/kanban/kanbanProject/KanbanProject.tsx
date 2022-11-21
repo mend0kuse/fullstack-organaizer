@@ -1,4 +1,4 @@
-import React, { FC, memo, useContext, useState } from 'react'
+import React, { FC, memo, useContext, useMemo, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard';
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -16,20 +16,25 @@ import KanbanTask from '../../../models/kanbanModels/KanbanTask';
 import { AuthToken } from '../../../context/authContext';
 import { useAppDispatch } from '../../../hooks/redux/reduxHooks';
 import { deleteKanbProject, saveKanbProject } from '../../../store/store';
+import KanbanProjectChat from './KanbanProjectChat';
+import { authService } from '../../../services/authService';
 
 interface KanbanProps {
+	username?: string | undefined
 	project: KanbanProject;
 	projects: KanbanProject[];
 	setActiveProjectId: (x: number) => void
 }
 
-const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId }) => {
+const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId, username }) => {
+
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
 	const dispatch = useAppDispatch()
 
 	const [deleteProject] = kanbanApi.useDeleteProjectMutation() //запрос на удаление с бд
 	const [saveProject] = kanbanApi.useUpdateProjectMutation() //запрос на обновление проекта в бд
+	const [invite] = authService.useInviteToProjectMutation()
 
 	const [boards, setBoards] = useState<KanbanBoard[]>(
 		project.boards.map(b => {
@@ -98,13 +103,20 @@ const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId })
 		if (projects.length > 1) {
 			setActiveProjectId(projects[projects.length - 2].id)
 		}
-		jwtToken ? await deleteProject(projId) : dispatch(deleteKanbProject(projId))
+		jwtToken ? await deleteProject([projId, jwtToken]) : dispatch(deleteKanbProject(projId))
 	}
 
-
+	const [inviteUser, setInviteUser] = useState('')
 	return (
 		<>
 			<div className='kanban__project project-kanban'>
+				<div className="">
+					<input type="text" value={inviteUser} onChange={e => setInviteUser(e.target.value)} />
+					<button onClick={() => invite([{ project: project.id, invitedUser: inviteUser }, jwtToken])}>Пригласить</button>
+				</div>
+				{jwtToken
+					? <KanbanProjectChat projectId={project.id} messages={project.messages} username={username} />
+					: <h1>Для чата необходимо авторизоваться</h1>}
 				<div className='project-kanban__inner'>
 					{boards.map(board =>
 						<KanbanBoardComp key={board.id} setBoardAdd={setBoardAdd} setFormType={setFormType} setModalVisible={setModalVisible} board={board} setBoards={setBoards} setItemDesc={setItemDesc} itemDesc={itemDesc} boards={boards} currentBoard={currentBoard} currentItem={currentItem} project={project} setCurrentBoard={setCurrentBoard} setCurrentItem={setCurrentItem} getItemToUpdate={getItemToUpdate} />
@@ -118,7 +130,7 @@ const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId })
 					<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProjHandler(project.id)} >Удалить проект</Button>
 					<Button type={ButtonTypes.BG_BLUE}
 						onClick={jwtToken
-							? () => saveProject([project.id, boards])
+							? () => saveProject([project.id, boards, jwtToken])
 							: () => dispatch(saveKanbProject({ id: project.id, boards }))}>Сохранить</Button>
 				</div>
 			</div >

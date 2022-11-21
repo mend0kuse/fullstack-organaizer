@@ -19,35 +19,42 @@ export const kanbanApi = createApi({
 			providesTags: result => ['kanban'],
 		}),
 		//удаление проекта
-		deleteProject: builder.mutation<KanbanProject, number>({
-			query: (id) => ({
+		deleteProject: builder.mutation<KanbanProject, [number, string]>({
+			query: ([id, token]) => ({
 				url: `/projects/${id}`,
 				method: 'DELETE',
+				headers: {
+					authorization: token
+				}
 			}),
 			invalidatesTags: ['kanban']
 		}),
 		//создание проекта
-		createProject: builder.mutation<KanbanProject, KanbanProject>({
-			query: (newProj) => ({
+		createProject: builder.mutation<KanbanProject, [KanbanProject, string]>({
+			query: ([newProj, token]) => ({
 				url: `/projects`,
 				method: 'POST',
+				headers: {
+					authorization: token
+				},
 				body: { ...newProj }
 			}),
 			invalidatesTags: ['kanban'],
-			transformResponse: (response: KanbanProject): KanbanProject => {
-				return response
-			}
 		}),
 		//обновление проекта
-		updateProject: builder.mutation<KanbanProject, [number, KanbanBoard[]]>({
-			query: ([id, boards]) => ({
+		updateProject: builder.mutation<KanbanProject, [number, KanbanBoard[], string]>({
+			query: ([id, boards, token]) => ({
 				url: `/projects/${id}`,
 				method: 'PUT',
+				headers: {
+					authorization: token
+				},
 				body: {
 					boards: boards
 				}
 			}),
 			invalidatesTags: ['kanban']
 		}),
+		
 	}),
 })
