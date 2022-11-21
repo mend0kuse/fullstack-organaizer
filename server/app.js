@@ -22,6 +22,8 @@ const io = new Server(server, {
 		methods: ["GET", "POST"]
 	}
 })
+//asdsadsad
+
 
 io.on("connection", (socket) => {
 	console.log('Подключен', socket.id);
