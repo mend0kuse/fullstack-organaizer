@@ -110,13 +110,11 @@ const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId, u
 	return (
 		<>
 			<div className='kanban__project project-kanban'>
-				<div className="">
+				{jwtToken && <div className="">
 					<input type="text" value={inviteUser} onChange={e => setInviteUser(e.target.value)} />
 					<button onClick={() => invite([{ project: project.id, invitedUser: inviteUser }, jwtToken])}>Пригласить</button>
-				</div>
-				{jwtToken
-					? <KanbanProjectChat projectId={project.id} messages={project.messages} username={username} />
-					: <h1>Для чата необходимо авторизоваться</h1>}
+				</div>}
+				{jwtToken && <KanbanProjectChat projectId={project.id} messages={project.messages} username={username} />}
 				<div className='project-kanban__inner'>
 					{boards.map(board =>
 						<KanbanBoardComp key={board.id} setBoardAdd={setBoardAdd} setFormType={setFormType} setModalVisible={setModalVisible} board={board} setBoards={setBoards} setItemDesc={setItemDesc} itemDesc={itemDesc} boards={boards} currentBoard={currentBoard} currentItem={currentItem} project={project} setCurrentBoard={setCurrentBoard} setCurrentItem={setCurrentItem} getItemToUpdate={getItemToUpdate} />

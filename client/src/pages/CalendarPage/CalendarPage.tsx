@@ -36,7 +36,7 @@ const CalendarPage: FC = memo(() => {
 
 	const addEvent = useCallback(
 		async (newEv: IEvent) => {
-			jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
+			jwtToken ? await createEvent([newEv, jwtToken]) : dispatch(createEventDay(newEv))
 		}, [jwtToken])
 
 	//переключение месяца при кликах на стрелки или смене селекта

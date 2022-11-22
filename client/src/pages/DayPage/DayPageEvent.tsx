@@ -16,7 +16,7 @@ const DayPageEvent: FC<DayPageEventProps> = ({ ev }) => {
     const [deleteOneEvent] = calendarApi.useDeleteEventMutation()
 
     const deleteEventHandler = async () => {
-        jwtToken ? await deleteOneEvent(ev.id) : dispatch(deleteEvent(ev.id))
+        jwtToken ? await deleteOneEvent([ev.id, jwtToken]) : dispatch(deleteEvent(ev.id))
     }
 
 

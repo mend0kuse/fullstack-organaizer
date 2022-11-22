@@ -10,34 +10,46 @@ export const calendarApi = createApi({
 
 		//получение событий
 		getEvents: builder.query<IEvent[], string>({
-			query: () => ({
+			query: (token) => ({
 				url: `/`,
+				headers: {
+					authorization: token
+				}
 			}),
 			providesTags: result => ['calendar'],
 		}),
 
 		//удаление события
-		getEventsById: builder.query<IEvent[], string>({
-			query: (id) => ({
+		getEventsById: builder.query<IEvent[], [string, string]>({
+			query: ([id, token]) => ({
 				url: `/${id}`,
+				headers: {
+					authorization: token
+				}
 			}),
 			providesTags: result => ['calendar'],
 		}),
 
 		//создание события
-		addEvent: builder.mutation<IEvent[], IEvent>({
-			query: (newEvent) => ({
+		addEvent: builder.mutation<IEvent[], [IEvent, string]>({
+			query: ([newEvent, token]) => ({
 				url: `/`,
 				method: 'POST',
-				body: { ...newEvent }
+				body: { ...newEvent },
+				headers: {
+					authorization: token
+				}
 			}),
 			invalidatesTags: result => ['calendar'],
 		}),
-		
-		deleteEvent: builder.mutation<IEvent[], number>({
-			query: (id) => ({
+
+		deleteEvent: builder.mutation<IEvent[], [number, string]>({
+			query: ([id, token]) => ({
 				url: `/${id}`,
 				method: 'DELETE',
+				headers: {
+					authorization: token
+				}
 			}),
 			invalidatesTags: result => ['calendar'],
 		}),
