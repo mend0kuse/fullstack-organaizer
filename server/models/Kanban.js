@@ -26,7 +26,8 @@ const KanbanSchema = new mongoose.Schema({
 	messages: [
 		{
 			username: { type: String, required: true },
-			content: { type: String, required: true }
+			content: { type: String, required: true },
+			date: { type: Number, required: true }
 		}
 	]
 });

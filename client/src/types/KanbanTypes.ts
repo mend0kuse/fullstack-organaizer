@@ -12,8 +12,10 @@ export interface INotification {
 }
 
 export interface ChatMessage {
-	username: any,
-	content: string
+	username: string,
+	content: string,
+	date: number,
+
 }
 
 export enum ButtonTypes {

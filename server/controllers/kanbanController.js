@@ -48,7 +48,7 @@ class KanbanConroller {
 	async postMsgInChat(id, username, msg) {
 		try {
 			await Kanban.updateOne({ id: id }, {
-				$push: { messages: { username: username, content: msg } }
+				$push: { messages: { username: username, content: msg.content, date: msg.date } }
 			})
 
 			let proj = await Kanban.findOne({ id: id })

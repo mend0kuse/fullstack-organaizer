@@ -2,6 +2,7 @@ import React, { FC, useContext, useMemo, useState } from 'react'
 import { io } from 'socket.io-client';
 import { AuthToken } from '../../../context/authContext';
 import { ChatMessage } from '../../../types/KanbanTypes';
+import { convertDate } from '../../../utils/convertDate';
 
 interface KanbanProjectChatProps {
 	username: string | undefined
@@ -18,19 +19,25 @@ const KanbanProjectChat: FC<KanbanProjectChatProps> = ({ projectId, messages, us
 	socket.on('res msg', (response) => setProjMes([...projMes, response.msg]))
 
 	const addMessage = () => {
-		setProjMes([...projMes, { username, content: chatMsg }])
-		socket.emit('send msg', { id: projectId, msg: chatMsg })
-		setChatMsg('')
+		if (username) {
+			setProjMes([...projMes, { username, content: chatMsg, date: Date.now() }])
+			socket.emit('send msg', { id: projectId, msg: { content: chatMsg, date: Date.now() } })
+			setChatMsg('')
+		}
+
 	}
 
 	return (
 		<div className='project-kanban__chat chat-kanban' >
 			<div className='chat-kanban__inner'>
 				{projMes.map((mess, index) => {
+					console.log();
+
 					return (
 						<div key={index}>
 							<p>Ник:{mess.username}</p>
 							<p>Сообщение:{mess.content}</p>
+							<p>Дата:{convertDate(new Date(mess.date))}</p>
 						</div>
 					)
 				})}
