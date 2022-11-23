@@ -21,7 +21,7 @@ const server = http.Server(app)
 
 const io = new Server(server, {
 	cors: {
-		origin: "http://localhost:3000",
+		origin: "https://fullstack-organaizer.vercel.app/",
 		methods: ["GET", "POST"]
 	}
 })
