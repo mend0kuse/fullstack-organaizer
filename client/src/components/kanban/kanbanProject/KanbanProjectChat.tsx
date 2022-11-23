@@ -15,7 +15,7 @@ const KanbanProjectChat: FC<KanbanProjectChatProps> = ({ projectId, messages, us
 	const [projMes, setProjMes] = useState(messages)
 	const [chatMsg, setChatMsg] = useState('')
 
-	const socket = useMemo(() => io(`https://server-production-e635.up.railway.app?room=${projectId}`, { auth: { token: jwtToken } }), [jwtToken])
+	const socket = useMemo(() => io(`http://localhost:5000?room=${projectId}`, { auth: { token: jwtToken } }), [jwtToken])
 	socket.on('res msg', (response) => setProjMes([...projMes, response.msg]))
 
 	const addMessage = () => {
