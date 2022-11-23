@@ -5,7 +5,7 @@ import KanbanProject from '../models/kanbanModels/KanbanProject'
 
 export const kanbanApi = createApi({
 	reducerPath: 'kanbanApi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://server-production-e635.up.railway.app' }),
 	tagTypes: ['kanban'],
 	endpoints: (builder) => ({
 		//получение проектов
@@ -55,6 +55,6 @@ export const kanbanApi = createApi({
 			}),
 			invalidatesTags: ['kanban']
 		}),
-		
+
 	}),
 })

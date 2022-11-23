@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const calendarApi = createApi({
 	reducerPath: 'calendarApi',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/calendar' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://server-production-e635.up.railway.app/calendar' }),
 	tagTypes: ['calendar'],
 	endpoints: (builder) => ({
 
