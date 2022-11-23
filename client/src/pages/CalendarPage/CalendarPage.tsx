@@ -5,7 +5,6 @@ import EventForm from '../../components/calendar/EventForm'
 import Modal from '../../components/UI/modal/modal'
 import { AuthToken } from '../../context/authContext'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux/reduxHooks'
-import { Day } from '../../models/calendarModels/Day'
 import { Month } from '../../models/calendarModels/Month'
 import { calendarApi } from '../../services/calendarApi'
 import { createEventDay } from '../../store/store'
@@ -23,7 +22,7 @@ const CalendarPage: FC = memo(() => {
 
 	//api logic
 	const [createEvent] = calendarApi.useAddEventMutation()
-	const { data } = calendarApi.useGetEventsQuery('')
+	const { data } = calendarApi.useGetEventsQuery(jwtToken)
 
 	//события для дней
 	const events = (jwtToken && data) ? data : ev //если авторизован то данные с базы
@@ -34,10 +33,9 @@ const CalendarPage: FC = memo(() => {
 	const [eventModal, setEventModal] = useState(false)
 	const [addedDayId, setAddedDayId] = useState<null | string>(null) //стейт для дня в который будет добовляться событие
 
-	const addEvent = useCallback(
-		async (newEv: IEvent) => {
-			jwtToken ? await createEvent(newEv) : dispatch(createEventDay(newEv))
-		}, [jwtToken])
+	const addEvent = async (newEv: IEvent) => {
+		jwtToken ? await createEvent([newEv, jwtToken]) : dispatch(createEventDay(newEv))
+	}
 
 	//переключение месяца при кликах на стрелки или смене селекта
 	useEffect(() => {

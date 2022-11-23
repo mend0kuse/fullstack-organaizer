@@ -1,14 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { INotification } from '../types/KanbanTypes';
 
 export interface User {
 	_id: string;
 	username: string;
 	avatar?: string;
-}
-export interface UserWithAvatar {
-	_id: string;
-	username: string;
-	avatar: string;
+	notifications: INotification[]
 }
 
 
@@ -44,7 +41,8 @@ export const authService = createApi({
 			}),
 			providesTags: result => ['lk'],
 		}),
-		sendAvatar: builder.mutation<UserWithAvatar, FormData>({
+
+		sendAvatar: builder.mutation<User, FormData>({
 			query: (form) => ({
 				url: `/lk/avatar`,
 				method: 'POST',
@@ -53,6 +51,25 @@ export const authService = createApi({
 			invalidatesTags: ['lk'],
 		}),
 
+		inviteToProject: builder.mutation<User, [INotification, string]>({
+			query: ([notif, token]) => ({
+				url: `/lk/invite`,
+				method: 'POST',
+				body: notif,
+				headers: {
+					authorization: token
+				}
+			}),
+		}),
+
+		acceptInvite: builder.mutation<User, [string, string]>({
+			query: ([notId, userId]) => ({
+				url: `/lk/accept`,
+				method: 'POST',
+				body: { notId, userId },
+			}),
+			invalidatesTags: ['lk'],
+		}),
 
 	}),
 })

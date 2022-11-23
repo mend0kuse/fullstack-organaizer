@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 const KanbanSchema = new mongoose.Schema({
+	userId: [ObjectId],
 	id: { type: Number, required: true },
 	name: { type: String, required: true },
 	boards: [
@@ -19,6 +21,13 @@ const KanbanSchema = new mongoose.Schema({
 					pinned: { type: Boolean, required: true }
 				}
 			]
+		}
+	],
+	messages: [
+		{
+			username: { type: String, required: true },
+			content: { type: String, required: true },
+			date: { type: Number, required: true }
 		}
 	]
 });
