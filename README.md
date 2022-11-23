@@ -1,4 +1,4 @@
-# Fullstack organaizer(по ссылке только фронт)
+# Fullstack organaizer
 
 Приложение для организации личных дел
 
@@ -6,7 +6,7 @@
 
 - Календарь с возможностью добавить событие на определенный день
 ![App Screenshot](https://sun9-east.userapi.com/sun9-26/s/v1/ig2/Tj7fYgggytEeMU34br9oLm1NaTrE5av-Na4OfxLG7W5DIkepxS1RUT7SuykrhO0AIyI20abyxpBjFpWTwwSZvzPI.jpg?size=1919x903&quality=96&type=album)
-![App Screenshot](https://sun9-east.userapi.com/sun9-73/s/v1/ig2/QXZhTZR5OreMUmLyiQvZp8bU1Z8hFD0LQLrKufO2AGFw3p6VUVySCl3XpTQAXbZQ5yx3zD5S7GF-A5umMX7DyCZB.jpg?size=1919x904&quality=96&type=album)
+![App Screenshot](https://sun9-west.userapi.com/sun9-13/s/v1/ig2/gBVLpJp8KhfN7qLSNxrGKcR30_J_HN9mMaeBWyHUn0ntNQsjth-RJDQ0dtuRYIjaWbC4-A-HBJOYE1VqKvHJpmie.jpg?size=1919x903&quality=96&type=album)
 - Канбан-проекты
 ![App Screenshot](https://sun9-north.userapi.com/sun9-85/s/v1/ig2/fypsoqdG1XjTEtnAW5AI0qDiLWKwcBOenC8vFyp3YvsfaLAyWNu3sJrqaJr2shw8yqKW6jYT9jap7suN-HCTWjjR.jpg?size=1917x900&quality=96&type=album)
 - Личный кабинет(пока только с аватаркой)
@@ -53,7 +53,6 @@
 
 ## Логика для авторизованного/неавторизованного пользователя
 
-- Авторизация работает только при запущенном сервере и наличии монго на пк(в скором времени подниму удаленную)
 - У авторизованно пользователя все сохраняется в базу данных(запросы реализованы черет RTK Query)
 - у неавторизованно пользователя сохраняется в Redux,при обновлении страницы сбрасывается(при переключении между страницами сохраняется)
 
