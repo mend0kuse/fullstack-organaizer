@@ -52,7 +52,7 @@ const Lk = () => {
 				<form className='lk__profile'>
 					<h1>ПРивет {data.username}</h1>
 					{data.avatar
-						? <img src={'http://localhost:5000/images/' + data.avatar} className='avatar' alt="sdf" />
+						? <img src={'https://server-production-e635.up.railway.app/images/' + data.avatar} className='avatar' alt="sdf" />
 						: <img src={anon} className='avatar' alt=''></img>
 					}
 					<input type="file" onChange={(e) => setUploadFile(e.target.files)} />

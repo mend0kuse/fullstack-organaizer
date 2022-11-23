@@ -25,7 +25,7 @@ const Navbar: FC<NavbarProps> = memo(({ navbarOpen }) => {
 					{jwtToken
 						?
 						<>
-							{profile && <img src={profile.avatar ? 'http://localhost:5000/images/' + profile.avatar : anon} alt="" />}
+							{profile && <img src={profile.avatar ? 'https://server-production-e635.up.railway.app/images/' + profile.avatar : anon} alt="" />}
 							<Link className='list-navbar__link ' to='/lk'>Профиль</Link>
 						</>
 						:
