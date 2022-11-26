@@ -55,6 +55,6 @@ export const kanbanApi = createApi({
 			}),
 			invalidatesTags: ['kanban']
 		}),
-
+		
 	}),
 })
