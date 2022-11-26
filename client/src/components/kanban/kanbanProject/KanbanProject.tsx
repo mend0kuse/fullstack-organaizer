@@ -1,4 +1,4 @@
-import React, { FC, memo, useContext, useMemo, useState } from 'react'
+import React, { FC, memo, useContext, useEffect, useMemo, useState } from 'react'
 import KanbanBoard, { KanbanBoardLogic } from '../../../models/kanbanModels/KanbanBoard';
 import KanbanBoardItem from '../../../models/kanbanModels/KanbanTask';
 import KanbanProject from '../../../models/kanbanModels/KanbanProject';
@@ -26,7 +26,7 @@ interface KanbanProps {
 	setActiveProjectId: (x: number) => void
 }
 
-const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId, username }) => {
+const Kanban: FC<KanbanProps> = ({ project, projects, setActiveProjectId, username }) => {
 
 	const { jwtToken, setJwtToken } = useContext(AuthToken)
 
@@ -99,12 +99,23 @@ const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId, u
 		}
 	}
 
-	async function deleteProjHandler(projId: number) {
+	async function deleteProjHandler() {
 		if (projects.length > 1) {
 			setActiveProjectId(projects[projects.length - 2].id)
 		}
-		jwtToken ? await deleteProject([projId, jwtToken]) : dispatch(deleteKanbProject(projId))
+		jwtToken ? await deleteProject([project.id, jwtToken]) : dispatch(deleteKanbProject(project.id))
 	}
+
+	async function saveProjHandler() {
+		jwtToken
+			? await saveProject([project.id, boards, jwtToken])
+			: dispatch(saveKanbProject({ id: project.id, boards }))
+	}
+
+	useEffect(() => {
+		saveProjHandler()
+	}, [boards])
+
 
 	const [inviteUser, setInviteUser] = useState('')
 	return (
@@ -125,11 +136,7 @@ const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId, u
 					</div>
 				</div>
 				<div className='project-kanban__buttons'>
-					<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProjHandler(project.id)} >Удалить проект</Button>
-					<Button type={ButtonTypes.BG_BLUE}
-						onClick={jwtToken
-							? () => saveProject([project.id, boards, jwtToken])
-							: () => dispatch(saveKanbProject({ id: project.id, boards }))}>Сохранить</Button>
+					<Button type={ButtonTypes.BG_BLUE} onClick={() => deleteProjHandler()} >Удалить проект</Button>
 				</div>
 			</div >
 
@@ -139,6 +146,6 @@ const Kanban: FC<KanbanProps> = memo(({ project, projects, setActiveProjectId, u
 
 		</>
 	)
-})
+}
 
 export default Kanban

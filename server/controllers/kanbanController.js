@@ -9,7 +9,6 @@ class KanbanConroller {
 		} catch (error) {
 			res.status(400).send(error.message)
 		}
-
 	}
 	async createOne(req, res) {
 		try {
