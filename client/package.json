@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@editorjs/delimiter": "^1.2.0",
+    "@editorjs/editorjs": "^2.25.0",
+    "@editorjs/header": "^2.6.2",
+    "@editorjs/list": "^1.7.0",
+    "@editorjs/marker": "^1.2.2",
+    "@editorjs/quote": "^2.4.0",
+    "@editorjs/table": "^2.1.0",
+    "@editorjs/underline": "^1.0.0",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -49,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@editorjs/link": "^2.4.2",
     "@types/react-transition-group": "^4.4.5"
   }
 }

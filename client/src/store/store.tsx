@@ -3,6 +3,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { authService } from '../services/authService'
 import { calendarApi } from '../services/calendarApi'
 import { kanbanApi } from '../services/kanbanApi'
+import { notebookApi } from '../services/notebookService'
 import { eventSlice } from './reducers/calendarReducer'
 import { kanbanSlice } from './reducers/kanbanReducer'
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	[kanbanApi.reducerPath]: kanbanApi.reducer,
 	[calendarApi.reducerPath]: calendarApi.reducer,
 	[authService.reducerPath]: authService.reducer,
+	[notebookApi.reducerPath]: notebookApi.reducer,
 })
 
 
@@ -23,6 +25,8 @@ export const store = configureStore({
 			.concat(kanbanApi.middleware)
 			.concat(calendarApi.middleware)
 			.concat(authService.middleware)
+			.concat(notebookApi.middleware)
+
 })
 
 export type RootState = ReturnType<typeof store.getState>
