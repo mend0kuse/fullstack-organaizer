@@ -17,7 +17,6 @@ declare module '@editorjs/delimiter'
 declare module '@editorjs/marker'
 declare module '@editorjs/underline'
 declare module '@editorjs/text-variant-tune'
-// declare module '@editorjs/quote'
 
 
 

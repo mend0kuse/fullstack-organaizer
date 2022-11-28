@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { ObjectId } from 'mongoose';
 
 const NoteSchema = new mongoose.Schema({
-
+	title: { type: String },
 	userId: [ObjectId],
 	time: { type: Number, required: true },
 	version: { type: String, required: true },

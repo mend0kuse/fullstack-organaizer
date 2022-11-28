@@ -6,7 +6,7 @@ class NotebookController {
 			const userId = req.user.id
 			const newNote = new Note({ ...req.body, userId: userId })
 			await newNote.save()
-			res.send(newNote)
+			res.status(200).send(newNote)
 		} catch (error) {
 			console.log(error);
 			res.status(400).send(error.message)
@@ -16,7 +16,7 @@ class NotebookController {
 		try {
 			if (req.params.id == 'null') throw new Error('')
 
-			const result = await Note.findOne({ _id: req.params.id })
+			const result = await Note.findOne({ time: req.params.id })
 			res.status(200).send(result)
 
 		} catch (error) {
@@ -35,9 +35,24 @@ class NotebookController {
 	async deleteOne(req, res) {
 		const noteId = req.params.id
 		try {
-			const deleted = await Note.deleteOne({ _id: noteId })
+			const deleted = await Note.deleteOne({ time: noteId })
 			res.send(deleted)
 		} catch (error) {
+			console.log(error);
+			res.status(400).send(error)
+		}
+	}
+	async updateOne(req, res) {
+		const noteId = req.params.id
+
+		try {
+			await Note.updateOne({ time: noteId }, { $set: { blocks: req.body.blocks } })
+			await Note.updateOne({ time: noteId }, { title: req.body.title })
+
+			res.send(await Note.findOne({ time: noteId }))
+
+		} catch (error) {
+
 			console.log(error);
 			res.status(400).send(error)
 		}

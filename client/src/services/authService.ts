@@ -11,7 +11,7 @@ export interface User {
 
 export const authService = createApi({
 	reducerPath: 'authService',
-	baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+	baseQuery: fetchBaseQuery({ baseUrl: 'https://server-production-e635.up.railway.app' }),
 	tagTypes: ['lk'],
 	endpoints: (builder) => ({
 		//регистрация

@@ -1,42 +1,57 @@
-import React, { useContext } from 'react'
-import EditorJS from '@editorjs/editorjs';
+import React, { memo, useContext, useEffect, useState } from 'react'
+import { createReactEditorJS } from 'react-editor-js'
 import { useParams } from 'react-router-dom'
 import { AuthToken } from '../../context/authContext'
 import { notebookApi } from '../../services/notebookService'
-import createEditor from '../../utils/createEditor';
 import './NotePage.scss'
-import Note from '../../models/notebookModels/Note';
 
-const NotePage = () => {
-	const params = useParams()
+import Input from '../../components/UI/input/Input';
+import { editorTools } from '../../utils/editorzConfig'
+import { useEditorConfig } from '../../hooks/editor/useEditorConfig'
+import NotePageButtons from './NotePageButtons'
+import { useAppSelector } from '../../hooks/redux/reduxHooks'
 
-	const { jwtToken, setJwtToken } = useContext(AuthToken)
+const NotePage = memo(() => {
 
-	const [createNote] = notebookApi.useCreateNoteMutation()
-	const { data: note, isSuccess, isError } = notebookApi.useGetNoteByIdQuery([jwtToken, params.id ? params.id : 'null'])
+	const params = useParams() //Если есть id, то логика для обновления/удаления, если нет,то для создания
 
-	let editor: EditorJS;
+	const { jwtToken } = useContext(AuthToken)
 
-	if (isSuccess) {
-		editor = createEditor('editorjs', note.blocks)
-	}
-	if (isError) {
-		editor = createEditor('editorjs')
-	}
+	const noteRedux = useAppSelector(state => state.notes.notes.find(i => i.time.toString() === params.id))
+	const { data, isFetching } = notebookApi.useGetNoteByIdQuery([jwtToken, params.id ? params.id : 'null'])
+
+	const note = data ? data : noteRedux
+
+	const ReactEditorJS = createReactEditorJS()
+	const { handleSave, handleInitialize } = useEditorConfig()
+
+	const [title, setTitle] = useState('')
+
+	useEffect(() => {
+		if (note)
+			setTitle(note.title)
+	}, [note])
+
 
 	return (
 		<div className='note__container'>
-			<div id="editorjs">
 
-			</div>
+			<Input type="text" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} placeholder='Введите название' />
+			<NotePageButtons id={params.id} handleSave={handleSave} note={note} title={title} ></NotePageButtons>
+			{!isFetching &&
+				<ReactEditorJS
+					inlineToolbar
+					defaultValue={note}
+					tools={editorTools}
+					onInitialize={handleInitialize}
+					placeholder='Let`s write an awesome story!'
+					holder="editorjs">
+					<div id="editorjs" />
+				</ReactEditorJS>}
 
-			{params.id
-				? <button >Обновить</button>
-				: <button onClick={() => { editor.save().then(savedData => createNote([savedData as Note, jwtToken])) }} >Создать</button>
-			}
 
 		</div>
 	)
-}
+})
 
 export default NotePage
