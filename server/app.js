@@ -14,6 +14,8 @@ import http from 'http'
 import { Server } from "socket.io";
 import kanbanController from './controllers/kanbanController.js';
 
+import og from 'open-graph'
+import { routerNotebook } from './routers/NotebookRouter.js'
 
 
 const app = express()
@@ -59,7 +61,16 @@ app.use('/projects', routerKanban)
 app.use('/calendar', routerCalendar)
 app.use('/auth', routerAuth)
 app.use('/lk', lkRouter)
+app.use('/notebook', routerNotebook)
 
+
+app.get('/fetchUrl', (req, res) => {
+	const url = req.query.url
+	og(url, function (err, meta) {
+		if (meta) res.json({ success: 1, meta });
+		else res.json({ success: 0, meta: {} });
+	});
+})
 
 server.listen(PORT, dbsConnect)
 
@@ -68,7 +79,7 @@ async function dbsConnect() {
 		// await mongoose.connect('mongodb://0.0.0.0:27017/organaizer');
 		// await mongoose.connect('mongodb://10.100.3.210:27017/organaizer');
 		await mongoose.connect('mongodb://mongo:6lgYmHL1u230trZ5qV6B@containers-us-west-81.railway.app:6122');
-		
+
 		console.log('База подключена');
 	} catch (error) {
 		console.log(error);

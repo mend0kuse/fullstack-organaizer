@@ -42,6 +42,9 @@ const Navbar: FC<NavbarProps> = memo(({ navbarOpen }) => {
 					<Link className='list-navbar__link _icon-Document' to='/kanban'>Канбан</Link>
 				</li>
 				<li className='list-navbar__item'>
+					<Link className='list-navbar__link' to='/notebook'>Блокнот</Link>
+				</li>
+				<li className='list-navbar__item'>
 					{jwtToken
 						? <Button type={ButtonTypes.BG_NONE} className='list-navbar__link' onClick={e => setJwtToken('')}>Выход</Button>
 						: <Link className='list-navbar__link ' to='/registration'>Регистрация</Link>

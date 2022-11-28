@@ -21,7 +21,7 @@ export const kanbanSlice = createSlice({
 		},
 		saveKanbProject(state, action) {
 			state.projects = state.projects.map(i => {
-				if (i.id == action.payload.id) {
+				if (i.id === action.payload.id) {
 					i.boards = action.payload.boards
 					return i
 				}

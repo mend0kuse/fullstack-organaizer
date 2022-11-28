@@ -8,7 +8,7 @@
     "front": "npm start --prefix client",
     "server": "nodemon server/app.js",
     "dev": "concurrently \"npm run server\" \"npm run front\"",
-    "build":"npm i --prefix client"
+    "build": "npm i --prefix client"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "multer": "^1.4.5-lts.1",
+    "open-graph": "^0.2.6",
     "socket.io": "^4.5.3"
   },
   "devDependencies": {

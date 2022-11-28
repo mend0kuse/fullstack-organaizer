@@ -20,7 +20,7 @@ const KanbanAddField: FC<AddFieldProps> = memo(({ className, value, setValue, fn
 	return (
 		<CSSTransition mountOnEnter unmountOnExit in={anim} timeout={500} classNames={className}>
 			<div className={className}>
-				<Input placeholder='Введите название' value={value} onChange={e => setValue(e.target.value)} type="text" />
+				<Input placeholder='Введите название' value={value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)} type="text" />
 				<button className='_icon-mark' onClick={e => {
 					if (value.length !== 0) {
 						setAnim(!anim)

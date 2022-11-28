@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, {forwardRef } from 'react'
 import './input.scss'
 
 interface InputProps {
@@ -6,16 +6,18 @@ interface InputProps {
 	[x: string]: any;
 }
 
-const Input: FC<InputProps> = ({ ...props }) => {
+type Ref = HTMLInputElement;
+
+const Input = forwardRef<Ref, InputProps>((props, ref) => {
 	const rootClass = ['my-inp']
-	
+
 	if (props.className) {
 		rootClass.push(props.className)
 	}
 
-	return (
-		<input {...props} className={rootClass.join(' ')} />
-	)
-}
+	return ref
+		? <input {...props} ref={ref} className={rootClass.join(' ')} />
+		: <input {...props} className={rootClass.join(' ')} />
+})
 
 export default Input
