@@ -36,6 +36,7 @@ const NotePageButtons: FC<NotePageButtonsProps> = ({ id, handleSave, note, title
 					await createNote([newNote, title, jwtToken]).unwrap().then(note => router(`/notepage/${note.time}`))
 				} else {
 					dispatch(addNote({ ...newNote, title }))
+					router(`/notepage/${newNote.time}`)
 				}
 			})
 	}
