@@ -31,7 +31,7 @@ export const editorTools = {
 	linkTool: {
 		class: LinkTool,
 		config: {
-			endpoint: 'http://localhost:5000/fetchUrl', // Your backend endpoint for url data fetching,
+			endpoint: 'https://server-production-e635.up.railway.app/fetchUrl', // Your backend endpoint for url data fetching,
 		}
 	},
 	table: {
